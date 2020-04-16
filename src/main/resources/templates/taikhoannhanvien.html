@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        tbody > tr > td {
+            padding: 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/code}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlitaikhoan}">Quản lí tài khoản nhân viên</a>
+    <!--    <a th:href="@{/quanlidonhang}">Quản lí sale</a>-->
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
+    </div>
+    <div class="row">
+
+        <div class="container p-6">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="row p-3">
+
+
+                        <div>
+
+                        </div>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Tài khoản</th>
+                                <th>Mật khẩu đã mã hóa</th>
+                                <th>Khóa tài khoản</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="nv in nhanvien">
+                                <td>{{nv.id}}</td>
+                                <td>{{nv.pass}}</td>
+                                <td><i class="fa fa-remove" style="font-size:48px;color:red" ng-click="remove(nv.id)"></i></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <!-- them ma code moi -->
+
+                    <h2>Thêm nhân viên ....</h2>
+                    <form >
+                        <div class="form-group">
+                            <label for="email">Tài khoản:</label>
+                            <input type="text" class="form-control" ng-model="taikhoan" id="email" placeholder="tai khoan...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mật khẩu :</label>
+                            <input type="password" class="form-control" placeholder="pass ..." ng-model="password">
+                        </div>
+
+                        <button type="button" class="btn btn-info" ng-click="them()">Thêm</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('productController', function ($scope, $http) {
+        $scope.nhanvien = null;
+        $scope.getAll = function () {
+            $http.get("/apinhanvien").then(function (result) {
+                $scope.nhanvien = result.data.data;
+            })
+        }
+
+        $scope.them=function(){
+            $http({
+                method:"POST",
+                url:"/apinhanvien/add",
+                data:{
+                    id:$scope.taikhoan,
+                    pass:$scope.password,
+
+                }
+            }).then(function(result) {
+                if("loi"==result.data.message){
+
+                    swal({
+                        title: "tai khoan da ton tai",
+                        icon: "error",
+                    })
+                }else{
+                    $scope.nhanvien=result.data.data;
+                    swal({
+                        title: "them thanh cong",
+                        icon: "success",
+                    })
+                }
+            })
+        }
+
+        $scope.remove=function(event){
+            $http({
+                method:"PUT",
+                url:"/apinhanvien/locked",
+                data:{
+                    id:event,
+
+
+                }
+            }).then(function(result) {
+                    $scope.nhanvien=result.data.data;
+                    swal({
+                        title: "Locked thanh cong",
+                        icon: "success",
+                    })
+
+            })
+        }
+    });
+</script>
+
+</body>
+</html>

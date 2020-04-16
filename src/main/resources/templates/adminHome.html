@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+        tbody > tr > td {
+            padding : 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/code}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlitaikhoan}">Quản lí tài khoản nhân viên</a>
+<!--    <a th:href="@{/quanlidonhang}">Quản lí sale</a>-->
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
+    </div>
+    <div class="row">
+        <div class="col-sm-7 p-4">
+
+
+            <div >
+                <ul class="pagination m-4">
+                    <li class="page-item"><a class="page-link d-inline" ng-click="pre(page)" ng-if="page>0">pre page</a></li>
+                    <li class="page-item"><a class="page-link d-inline" ng-click="next(page)">next page</a></li>
+                    <li><h3 class="d-inline ml-3">page : {{page}}</h3></li>
+                    <li><button class="btn-outline-info d-inline float-right ml-3" ng-click="showAdd()">Add Product</button></li>
+                </ul>
+
+
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Giá tiền</th>
+                    <th>Đã bán</th>
+                    <th>Ngày tạo</th>
+                    <th>Danh mục</th>
+                    <th>Ngày sửa gần đây</th>
+                    <th>Sửa </th>
+                    <th>Dừng kinh doanh</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat ="p in product | limitTo : end : start">
+                    <td>{{p.product}}</td>
+                    <td><img ng-src="/{{p.image}}" style="width: 100%"></td>
+                    <td>{{p.number}}</td>
+                    <td ng-if="p.giamGia == p.price">{{p.price}}</td>
+                    <td ng-if="p.giamGia < p.price">{{p.giamGia}} -  <del style="margin-left: 7px">{{p.price}}</del></td>
+                    <td>{{p.sold}}</td>
+                    <th>{{p.forMartDateCread}}</th>
+                    <td><span ng-repeat="n in p.productCategoriesByIdproduct">{{n.categoryByCategory.category}}</span></td>
+                    <th ng-if="p.forMartDateUpdate==''">Chưa update</th>
+                    <th ng-if="p.forMartDateUpdate!=''">{{p.forMartDateUpdate}}</th>
+                    <td><i class='fas fa-pen-nib' style='font-size:40px;color: blue' ng-click="edit(p.idproduct)"></i></td>
+                    <td><i class="fa fa-close" style="font-size:40px;color:red" ng-click="delete(p.idproduct)"></i></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="col-md-5">
+            <div class="row mb-3 ml-5 mt-5" id="hideAdd">
+                <form class="form-group" enctype="multipart/form-data" id="fileUploadForm">
+                    <label >Tên sản phẩm:</label>
+                    <input type="text" class="form-control mr-3 ml-3" ng-model="nameProduct" placeholder="nhap ten san pham..." id="name">
+                    <label >Giá : </label>
+                    <input type="number" class="form-control mr-3 ml-3" ng-model="prince" placeholder="nhap so luong..." id="prince">
+
+                    <label >Hình ảnh:</label>
+                    <input type="file" multiple class="form-control mr-3 ml-3" name="files" id="myFile">
+
+                    <div id="fileImage">
+                        <div id="imgFindId">
+                            <img style="margin: 20px; width: 100px; height: 100px" src="{{productfindId.image}}">
+                            <img style="margin: 20px; width: 100px; height: 100px" ng-repeat="img in productfindId.hinhanhsByIdproduct" src="{{img.image}}">
+                        </div>
+                    </div>
+                    <label >Thông tin ảnh :</label>
+                    <input type="text" class="form-control mr-3 ml-3" id="nameF" ng-model="nameFile" readonly>
+                    <img id="hinhAnh">
+
+                    <div class="form-group">
+                        <label for="sel1">Danh mục:</label>
+                        <select ng-model="danhmuc" class="form-control" id="sel1">
+                            <option th:each="c :${list}" th:value="${c.getIdcategory()}"><span th:utext="${c.getCategory()}"></span></option>
+
+                        </select>
+                    </div>
+
+
+                    <textarea name="editor1"></textarea>
+                    <br>
+                    <button type="button" id="add" class="btn btn-primary" ng-click="addProduct()">Thêm sản phẩm</button>
+                    <button type="button" id="update" class="btn btn-primary" ng-click="updateProduct(productfindId.idproduct)">Cập nhật sản phẩm</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    CKEDITOR.replace( 'editor1' );
+</script>
+<script>
+
+    $(document).ready(function(){
+
+
+        $("#myFile").click(function(){
+            $("#fileRemove").remove();
+            $("#imgFindId").hide();
+        })
+        $("#myFile").change(function(){
+            var form=$("#fileUploadForm")[0];
+
+            var formData=new FormData(form);
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/apiUpload/upload",
+                data: formData,
+                processData: false, //prevent jQuery from automatically transforming the data into a query string
+                contentType: false,
+                success:function(data){
+                    var list=data.split(",");
+                    var fileTong=document.createElement("div");
+                    fileTong.id="fileRemove";
+
+                    list.forEach(function (item,index) {
+                        var img=document.createElement("img");
+                        img.src=item;
+                        img.style.width="100px";
+                        img.style.height="100px";
+                        img.style.margin="20px";
+
+                        fileTong.appendChild(img);
+
+                    })
+                    document.getElementById("fileImage").appendChild(fileTong);
+
+                    $("#nameF").val(data);
+                },
+                error :function(data){
+
+                }
+            })
+        })
+    })
+</script>
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('productController', function($scope,$http) {
+        $scope.product=null;
+        $scope.productfindId=null;
+        $scope.page=1;
+        $scope.start=($scope.page-1)*4;
+        $scope.end=$scope.start+4;
+        $scope.next=function(event){
+            $scope.page=event+1;
+            $scope.start=($scope.page-1)*4;
+            $scope.end=$scope.start+4;
+
+        }
+        $scope.pre=function(event){
+            $scope.page=event-1;
+            $scope.start=($scope.page-1)*4;
+            $scope.end=$scope.start+4;
+
+        }
+
+        $scope.showAdd=function(){
+            $("#hideAdd").show(500);
+            $("#add").show();
+            $("#update").hide();
+            $("#fileRemove").remove();
+            $scope.productfindId=null;
+            $scope.nameProduct=null;
+            $scope.prince=null;
+            $("#nameF").val("");
+
+
+        }
+        $scope.getAll=function(){
+            $http.get("/apiAdmin/product").then(function(result){
+                $scope.product=result.data.data;
+            })
+        }
+
+        $scope.updateProduct=function(id){
+            console.log($scope.theloai);
+            var desc = CKEDITOR.instances['editor1'].getData();
+            console.log($scope.danhmuc);
+            $http({
+                method : "PUT",
+                url :"/apiAdmin/product",
+                data:{
+                    idProduct:id,
+                    product :  $scope.nameProduct,
+
+                    prince : $scope.prince,
+
+                    image:$("#nameF").val(),
+                    category:$scope.danhmuc,
+                    desc:desc,
+
+
+
+                }
+            }).then(function (result) {
+                $scope.getAll();
+               // $scope.product=result.data.data;
+                swal({
+                    title:result.data.message,
+                    icon: "success",
+                });
+                $("#fileRemove").remove();
+                $scope.productfindId=null;
+                $scope.nameProduct=null;
+                $scope.prince=null;
+                $("#nameF").val("");
+                $("#hideAdd").hide();
+                $("#add").hide();
+            },function (errorCallback) {
+                swal({
+                    title:result.data.message,
+                    icon: "error",
+                });
+            })
+        }
+
+        $scope.addProduct=function(){
+            console.log($scope.theloai);
+            var desc = CKEDITOR.instances['editor1'].getData();
+            console.log(desc);
+           $http({
+               method : "POST",
+               url :"/apiAdmin/product",
+               data:{
+                   product :  $scope.nameProduct,
+                   prince : $scope.prince,
+                   image:$("#nameF").val(),
+                   category:$scope.danhmuc,
+                   desc:desc,
+               }
+           }).then(function (result) {
+               $scope.getAll();
+               swal({
+                   title:result.data.message,
+                   icon: "success",
+               });
+               $("#fileRemove").remove();
+               $scope.nameProduct=null;
+               $scope.prince=null;
+               $("#nameF").val("");
+               $("#hideAdd").hide();
+               $("#add").hide();
+           })
+        }
+
+        $scope.edit=function(event){
+            var id= event;
+            $http.get("/apiAdmin/product/"+id).then(function(result){
+                $("#hideAdd").show();
+                $("#add").hide();
+                $("#update").show();
+                $("#imgFindId").show();
+                $scope.productfindId=result.data.data;
+                $scope.nameProduct=result.data.data.product;
+                $scope.prince=result.data.data.price;
+                $("#nameF").val(result.data.data.stringImage);
+                CKEDITOR.instances['editor1'].setData(result.data.data.described);
+
+            })
+        }
+
+        $scope.editting=function(){
+            $http({
+                method:"PUT",
+                url:"/apiAdmin/product",
+                data:{
+                    idproduct : $scope.idproduct,
+                    product : $scope.nameProduct,
+                }
+            }).then(function (result) {
+                $scope.product=result.data.data;
+                $("#thongbao").html(result.data.message);
+
+            })
+        }
+
+        $scope.delete=function(event){
+            if(confirm("Dừng kinh doanh sản phẩm này ???")){
+                $http.get("/apiAdmin/product/delete/"+event).then(function(result){
+                    $scope.getAll();
+                })
+            }
+            else{
+
+            }
+        }
+
+
+
+
+
+    });
+</script>
+
+</body>
+</html>

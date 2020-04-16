@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        tbody > tr > td {
+            padding: 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/code}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlitaikhoan}">Quản lí tài khoản nhân viên</a>
+    <!--    <a th:href="@{/quanlidonhang}">Quản lí sale</a>-->
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
+    </div>
+    <div class="row">
+        <div id="searchForm" class="row p-4">
+            <form>
+
+
+                <div class="form-group">
+                    <label>Sản phẩm:</label>
+                    <input type="text" class="form-control" ng-keyup="timkiem()" id="sanpham"
+                           placeholder="Tìm kiếm sản phẩm">
+                    <input type="hidden" id="idproduct" ng-model="product" class="form-control">
+
+                    <div id="result" style="margin-top: 10px;position: absolute; background-color: gray;display: none">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr ng-repeat="s in search" ng-click="chon(s.idproduct,s.product)">
+                                <td><img ng-src="/{{s.image}}" style="width: 50px; height: 50px"></td>
+                                <td>{{s.product}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label>Size:</label>
+                    <select ng-model="size" class="form-control">
+                        <option th:each="s: ${size}" th:value="${s.getIdsize()}"><span th:utext="${s.getSize()}"></span>
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Chọn màu:</label>
+                    <select ng-model="mau" class="form-control">
+                        <option ng-repeat="c in color" value="{{c.idcolor}}">{{c.color}}</option>
+
+                    </select>
+                </div>
+
+
+                <button class="btn-info mt-4" ng-click="locsanpham()">Tìm kiếm</button>
+            </form>
+        </div>
+
+        <div class="container p-4">
+            <h2>Kho </h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Ảnh</th>
+                    <th>Tên sản phẩm - Size - Màu sắc</th>
+                    <th>Số lượng</th>
+
+                    <th>Chỉnh sửa số lượng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tam in danhsach">
+                    <td><img ng-src="/{{tam.anh}}" style="width: 150px; height: 150px"></td>
+                    <td>{{tam.sanPham}}</td>
+                    <td>{{tam.number}}</td>
+
+                    <td>
+                        <div >
+                            <input type="number" id="{{tam.idproductSizeColor}}" placeholder="so luong..." ng-model="soluong1">
+                            <button ng-click="update1(tam.idproductSizeColor)">Update</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img ng-src="/{{t.anh}}" style="width: 150px; height: 150px"></td>
+                    <td>{{t.sanPham}}</td>
+                    <td>{{t.number}}</td>
+                    <td>
+                        <div>
+                            <input type="number" placeholder="so luong..." ng-model="soluong2">
+                            <button ng-click="update(t.idproductSizeColor)">Update</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <a th:href="@{/nhaphang/back}">
+                <button class="btn-warning">Hoàn thành !!</button>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('productController', function ($scope, $http) {
+        //$scope.kitu=null;
+        $scope.color = null;
+        $scope.search = null;
+        $scope.danhsach = null;
+        $scope.sanphamtam = null;
+        $scope.t = null;
+        $http.get("/apinhaphang/color").then(function(result){
+            $scope.color=result.data.data;
+        })
+        $scope.timkiem = function () {
+            var kitu = $("#sanpham").val();
+            console.log("chay vao day");
+            if (null == kitu) {
+                $("#result").hide();
+            } else {
+                $http.get("/apinhaphang/search/" + kitu).then(function (result) {
+                    $scope.search = result.data.data;
+                    $("#result").show();
+                })
+            }
+
+        }
+
+        $scope.getAll = function () {
+            $http.get("/apikho").then(function (result) {
+                $scope.danhsach = result.data.data;
+                $scope.t = null;
+            })
+        }
+
+
+        $scope.locsanpham = function () {
+            console.log("chay vao search...");
+            console.log($("#idproduct").val() + ", " + $scope.size + "," + $scope.mau);
+            var idproduct = $("#idproduct").val();
+            var s = $scope.size;
+            var color = $scope.mau;
+            $http.get("/apikho/"+idproduct+"/"+s+"/"+color).then(function(result){
+                console.log("ten san pham :"+result.data.data.sanPham);
+                $scope.t=result.data.data;
+                $scope.danhsach=null;
+            })
+
+
+        }
+        $scope.chon=function(id,name){
+            $("#idproduct").val(id);
+            $("#sanpham").val(name);
+            $("#result").hide();
+        }
+
+
+        $scope.update=function(id){
+            var soluongstr=$scope.soluong2;
+
+            var id1 =Number(id);
+            $http.get("/apikho/update/"+ id1+"/"+ soluongstr).then(function (result) {
+
+                swal({
+                    title: "update thanh cong",
+                    icon: "success",
+                })
+                $scope.t=null;
+                $scope.danhsach=result.data.data;
+            })
+        }
+
+        $scope.update1=function(id){
+            console.log("chay vao update 1");
+            var soluongstr=$("#"+id).val();
+            console.log("so luong :"+soluongstr);
+            var id1 =Number(id);
+            $http.get("/apikho/update/"+ id1+"/"+ soluongstr).then(function (result) {
+
+                swal({
+                    title: "update thanh cong",
+                    icon: "success",
+                })
+                $scope.t=null;
+                $scope.danhsach=result.data.data;
+            })
+        }
+
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Page Title -->
+    <title>Classic Fashion Shop</title>
+    <!--Fevicon-->
+    <link rel="icon" th:href="@{/assets/img/icon/favicon.ico}" type="image/x-icon"/>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- linear-icon -->
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/linear-icon.css}">
+    <!-- all css plugins css -->
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+    <!-- default style -->
+    <link rel="stylesheet" th:href="@{/assets/css/default.css}">
+    <!-- Main Style css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- responsive css -->
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <!-- Modernizer JS -->
+    <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        select {
+            display: block;
+        }
+    </style>
+
+    <!-- Modernizer JS -->
+
+
+    <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<body ng-app="myApp" ng-controller="diaChiController">
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- header area start -->
+
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area mb-60">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/trangchu}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Mua hàng</li>
+
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<!-- Start of Checkout Wrapper -->
+<div class="checkout-wrapper pt-10 pb-70">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <main id="primary" class="site-main">
+
+
+                    <div class="checkout-area">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-7">
+                                <div class="checkout-form">
+                                    <div class="section-title left-aligned">
+                                        <h3>Thêm thông tin mua hàng :</h3>
+                                    </div>
+
+
+
+
+                                    <div id="chon dia chi nhan hang" th:if="${taikhoan==1}">
+                                        <h3>Chọn địa chỉ nhận hàng</h3>
+                                        <br>
+                                        <div class="checkout-payment">
+
+                                                <!-- dia chi -->
+                                                <div class="form-row" th:if="${sl==1}">
+
+                                                    <div class="custom-radio" th:each="chitiet : ${chitiet}">
+                                                        <input class="form-check-input" type="radio" name="check" id="check_payment" th:value="${chitiet.getIddiaChi()}" checked>
+                                                        <span class="checkmark"></span>
+                                                        <label class="form-check-label" for="check_payment">Địa chỉ :</label>
+
+                                                        <div class="payment-info" id="check_pay">
+                                                            <p th:utext="${chitiet.getThongTin()}"></p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- ket thuc dia chi -->
+
+                                        </div>
+                                        <br>
+                                        <button class="btn btn-secondary info" ng-click="chuyentiep()">Add Địa Chỉ</button>
+
+
+                                    </div>
+
+
+                                    <div id="show" style="padding: 20px">
+                                        <div class="form-group">
+                                            <label for="sel1">Tỉnh :</label>
+                                            <select class="form-control" id="sel1" ng-model="idTinh" ng-options="item.name for item in tinh"
+                                                    ng-change="setHuyen()">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sel1">Huyện :</label>
+                                            <select class="form-control" id="sel1" ng-model="idHuyen" ng-options="item.name for item in huyen"
+                                                    ng-change="setXa()">
+
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sel1">Xã :</label>
+                                            <select class="form-control" id="sel1" ng-model="idXa" ng-options="item.name for item in xa">
+
+
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="usr">Địa chỉ cụ thể:</label>
+                                            <input type="text" ng-model="chitiet" class="form-control" id="usr">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="usr">Họ tên :</label>
+                                            <input type="text" ng-model="hoten" class="form-control" id="usr">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="usr">Số điện thoại:</label>
+                                            <input type="text" ng-model="sdt" class="form-control" id="usr">
+                                        </div>
+                                        <br>
+
+                                        <button class="btn btn-secondary info" ng-click="addDiaChi()">Thêm / Update Địa Chỉ</button>
+                                    </div>
+
+
+
+
+
+
+
+
+
+                                </div> <!-- end of checkout-form -->
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-5">
+                                <form action="/muahang/hoanthanh" method="post">
+
+                                <div class="order-summary">
+
+
+                                    <div class="section-title left-aligned">
+                                        <h3>Hàng chọn mua</h3>
+
+                                    </div>
+                                    <input type="hidden" name="maPhieu" th:value="${maPhieu}">
+                                    <h3>Mã phiếu : <span th:utext="${maPhieu}"></span></h3>
+                                    <div class="product-container">
+
+                                        <!-- hang chon mua for each -->
+                                        <div class="product-list">
+                                            <div class="product-inner media align-items-center" th:each="ds : ${dsProduct}">
+                                                <input type="hidden" name="idCart" th:value="${ds.getIdcart()}">
+                                                <div class="product-image mr-4 mr-sm-5 mr-md-4 mr-lg-5">
+                                                    <a href="#">
+                                                        <img th:src="@{|/${ds.getProductSizeColorEntity().getProductByProduct().getImage()}|}" alt="Rival Field Messenger 6" title="Rival Field Messenger 6">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getProduct()}"></h5>
+                                                    <p class="product-quantity">số lượng: <span th:utext="${ds.getSoluong()}"></span></p>
+                                                    <p class="product-final-price" th:if="${ds.getProductSizeColorEntity().getProductByProduct().giamGia() < ds.getProductSizeColorEntity().getProductByProduct().getPrice()}">
+                                                        sale :<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getSaleBySale().getSale()}"></span><span>%</span></p>
+                                                    <p class="product-final-price">Giá tiền:<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getPrice()}"></span></p>
+                                                    <p class="product-final-price">Thành tiền :<span th:utext="${ds.thanhTien()}"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ket thuc hang chon mua -->
+                                    </div> <!-- end of product-container -->
+                                    <div class="order-review">
+                                        <div class="table-responsive">
+                                            <input type="hidden" name="idDiaChi" value="{{thongtin.iddiaChi}}">
+                                            <h3 class="mr-bottom-4">{{thongtin.ten}} - {{thongtin.sdt}}</h3>
+                                            <br>
+                                            <table class="table table-bordered">
+                                                <tbody>
+
+                                                <tr class="cart-subtotal">
+                                                    <th>Dia Chi</th>
+                                                    <td class="text-center">{{thongtin.chitiet}} - {{thongtin.xa}} - {{thongtin.huyen}} - {{thongtin.thanhpho}}</td>
+                                                </tr>
+                                                <tr class="cart-subtotal">
+                                                    <th>phi ship</th>
+                                                    <td class="text-center">{{thongtin.phiShip}}</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="order-review">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <tbody>
+
+                                                <tr class="cart-subtotal">
+                                                    <input type="hidden" name="idCode" th:value="${maCode}">
+                                                    <th>ap dung ma giam gia</th>
+                                                    <input type="hidden" name="giamGia" th:value="${sale}">
+                                                    <td class="text-center" th:if="${sale >0}"> - <span th:utext="${sale}"></span></td>
+                                                    <td class="text-center" th:if="${sale == 0}">-0 đ</span></td>
+                                                </tr>
+                                                <tr class="cart-subtotal">
+                                                    <th>Tổng tiền hàng</th>
+                                                    <input type="hidden" name="tongHang" th:value="${tongAll}">
+                                                    <td class="text-center"><span th:utext="${tongAll}"></span></td>
+                                                </tr>
+                                                <tr class="order-total">
+                                                    <th>Tổng tiền phải thanh toán</th>
+                                                    <td class="text-center"><strong>{{phaiTra + thongtin.phiShip | currency:"VND ":0}}</strong></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <br>
+                                            <div>
+
+                                                <input class="btn btn-secondary info" type="submit"  value="Đặt hàng"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <!-- end of checkout-payment -->
+                                </div>
+                                </form><!-- end of order-summary -->
+                            </div>
+                        </div> <!-- end of row -->
+                    </div> <!-- end of checkout-area -->
+                </main>
+
+        <!-- end of #primary -->
+            </div>
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div>
+<!-- End of Checkout Wrapper -->
+
+<!-- scroll to top -->
+<div class="scroll-top not-visible">
+    <i class="fa fa-angle-up"></i>
+</div> <!-- /End Scroll to Top -->
+
+<!-- footer area start -->
+<footer>
+    <!-- news-letter area start -->
+    <div class="newsletter-group">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="newsletter-box">
+                        <div class="newsletter-inner">
+                            <div class="newsletter-title">
+                                <h3>Đăng ký để nhận thông tin mới nhất</h3>
+                                <p>Hãy là người đầu tiên biết. Đăng ký nhận bản tin ngày hôm nay</p>
+                            </div>
+                            <div class="newsletter-box">
+                                <form id="mc-form">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="link-follow">
+                            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                            <a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a>
+                            <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- news-letter area end -->
+    <!-- footer top area start -->
+    <div class="footer-top pt-50 pb-50">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <div class="footer-logo mb-30">
+                                <a href="index.html">
+                                    <img src="assets/img/logo/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <p>Classic Fashion Shop.</p>
+                            <div class="payment-method">
+                                <h4>payment</h4>
+                                <img src="assets/img/payment/payment.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Information</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>contact us</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><span>Address:</span>Khoa CNTT- DHCNHN</li>
+                                    <li><span>email:</span> nguyenducduy131098@gmail.com</li>
+                                    <li><span>Call us:</span> <strong>0355636650</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Our FaceBook</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="twitter-article">
+                                <div class="twitter-text">
+                                    Classic Fashion Shop<a href="#">@ClassicFashionShop</a><br>
+                                    <a href="#">https://facebook.com</a>
+                                    <span class="tweet-time"><i class="fa fa-twitter"></i><a href="#">30 sep</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+            </div>
+        </div>
+    </div>
+    <!-- footer top area end -->
+    <!-- footer bottom area start -->
+    <div class="footer-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom-content">
+                        <div class="footer-copyright">
+                            <p>Copyright © 2020 <a href="#">Classic Fashion Shop </a>. All Right Reserved</p>
+                        </div>
+                        <div class="footer-custom-link">
+                            <a href="#">Brands</a>
+                            <a href="#">Specials</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer bottom area end -->
+</footer>
+<!-- footer area end -->
+
+<!-- all js include here -->
+
+
+<script>
+
+    var app = angular.module("myApp", []);
+    app.controller("diaChiController",function($scope,$http){
+        $scope.tinh=null;
+        $scope.huyen=null;
+        $scope.xa=null;
+        $scope.thongtin=null;
+        var tongHang=$("input[name=tongHang]").val();
+        var giamGia=$("input[name=giamGia]").val();
+        $scope.phaiTra=tongHang-giamGia;
+        $http.get("/api/thanhpho").then(function (data) {
+            $scope.tinh=data.data.data;
+
+        })
+        $scope.setHuyen=function(){
+            var idTinh=$scope.idTinh.provinceid;
+            $http.get("/api/thanhpho/gethuyen/"+idTinh).then(function (data) {
+                $scope.huyen=data.data.data;
+            })
+        }
+        $scope.setXa=function(){
+            var idHuyen=$scope.idHuyen.districtid;
+            $http.get("/api/thanhpho/gethuyen/getxa/"+idHuyen).then(function (data) {
+                $scope.xa=data.data.data;
+            })
+        }
+
+        $scope.addDiaChi=function(){
+            var ten=$scope.hoten;
+            var sdt=$scope.sdt;
+            var chitiet=$scope.chitiet;
+            var thanhpho=$scope.idTinh.name;
+            var huyen=$scope.idHuyen.name;
+            var xa=$scope.idXa.name;
+            $http({
+                url:"/api/themchitiet",
+                method:"POST",
+                data:{
+                    "ten":ten,
+                    "sdt":sdt,
+                    "chitiet":chitiet,
+                    "thanhpho":thanhpho,
+                    "huyen":huyen,
+                    "xa":xa,
+
+                }
+            }).then(function(data){
+                $scope.thongtin=data.data.data;
+
+            })
+        }
+
+        $scope.chuyentiep=function(){
+            var idDiaChi=$("input[name='check']:checked").val();
+            $http({
+                url:"/api/themchitiet/"+idDiaChi,
+                method:"GET",
+            }).then(function(data){
+                $scope.thongtin=data.data.data;
+
+            })
+        }
+    })
+</script>
+</body>
+
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
+</html>

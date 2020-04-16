@@ -1,0 +1,586 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:34 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Page Title -->
+    <title>Classic Fashion Shop</title>
+    <!--Fevicon-->
+    <link rel="icon" th:href="@{/assets/img/icon/favicon.ico}" type="image/x-icon"/>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- linear-icon -->
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/linear-icon.css}">
+    <!-- all css plugins css -->
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+    <!-- default style -->
+    <link rel="stylesheet" th:href="@{/assets/css/default.css}">
+    <!-- Main Style css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- responsive css -->
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+
+    <!-- Modernizer JS -->
+    <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        .hideC {
+            display: none;
+            position: absolute;
+            float: left;
+            left: 0;
+        }
+    </style>
+    <script>
+        function addToCart1(idProduct) {
+            var soLuong = document.getElementById("soLuong").value;
+            var idColor = 0;
+            idColor = $('input[name=color]:checked').val();
+            var idSize = 0;
+            idSize = $('input[name=size]:checked').val();
+            if (idColor == null || idSize == null) {
+                swal({
+                    title: "ban chua chon size hoac mau sac",
+                    icon: "error",
+                });
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: "/addToCart/" + idProduct + "/" + soLuong + "/" + idColor + "/" + idSize,
+                    success: function (data) {
+                        if (data > 0) {
+                            $("#myCart").html(data);
+                            swal({
+                                title: "them vao gio hang thanh cong",
+                                icon: "success",
+                            });
+                        } else {
+                            swal({
+                                title: "so luong hang khong du",
+                                icon: "error",
+                            });
+                        }
+                    },
+                    error: function (e) {
+
+                    }
+
+                })
+            }
+        }
+
+    </script>
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- header area start -->
+<header class="header-pos">
+    <div class="header-top black-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="header-top-left">
+                        <ul>
+                            <li><span>Classic Fashion Shop </span></li>
+                            <li>Chất lượng làm nên thương hiệu</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="box box-right">
+                        <ul>
+                            <li class="settings">
+                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
+                                <ul class="box-dropdown ha-dropdown">
+                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
+                                    <li><a th:href="@{/login}">Đăng nhập</a></li>
+                                    <li><a th:href="@{/homeAdmin}">For Admin</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle home-header2 theme-bg">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                    <div class="logo">
+                        <a th:href="@{/trangchu}"><img src="assets/img/logo/logo.png" alt="brand-logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-12 order-sm-last">
+                    <div class="header-middle-inner">
+                        <form th:action="@{/timkiem}" method="get">
+                            <input type="text" name="tukhoa" class="top-cat-field" placeholder="Tìm kiếm...">
+                            <input type="submit" class="top-search-btn" value="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-12 col-sm-8 order-lg-last">
+                    <div class="mini-cart-option">
+                        <ul>
+                            <li class="my-cart" th:if="${filter==1}">
+                                <a class="ha-toggle" href="#"><span class="lnr lnr-cart"></span><span class="count" th:utext="${soluongcode}"></span>Mã giảm giá</a>
+                                <ul class="mini-cart-drop-down ha-dropdown">
+                                    <li th:each="c : ${code}">
+                                        <ol>
+                                            <li>
+                                                <h4 style="color: #fedc19" th:utext="${c.getChitiet()}"></h4>
+                                                <br>
+                                            </li>
+                                            <li>
+                                                <div class="subtotal-text">Giảm giá: </div>
+                                                <div class="subtotal-price"><span th:utext="${c.getGiamGia()}"></span></div>
+                                            </li>
+                                            <li>
+                                                <div class="subtotal-text">Áp dụng từ: </div>
+                                                <div class="subtotal-price"><span th:utext="${c.getPriceMin()}"></span></div>
+                                            </li>
+                                            <br>
+                                            <hr style="width: 50%;">
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="my-cart">
+                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
+                                        class="count" th:utext="${sizeCart}"></span>Giỏ hàng</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-top-menu menu-style2 mb-40 sticker">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="top-main-menu">
+                        <div class="main-menu">
+                            <nav id="mobile-menu">
+                                <ul>
+                                    <li><a th:href="@{/trangchu}">Trang chủ<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li><a href="#">Thông tin<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li class="static"><a href="#">FaceBook Page<span
+                                            class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+
+
+                                </ul>
+                            </nav>
+                        </div> <!-- </div> end main menu -->
+
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header area end -->
+
+
+<!-- THANH DIA CHI TIEU DE -->
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area mb-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/trangchu}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">About</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<!--  end related-product -->
+
+<!-- login-->
+<!--<div class="login-wrapper pb-70">-->
+<!--    <div class="container-fluid">-->
+<!--        <div class="row">-->
+<!--            <div class="col-12 col-sm-12 col-md-12 col-lg-12">-->
+<!--                <main id="primary" class="site-main">-->
+<!--                    <div class="user-login">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-12 col-sm-12 col-md-12">-->
+<!--                                <div class="section-title text-center">-->
+<!--                                    <h3>Dang ki</h3>-->
+
+<!--                                    <h4 style="color: red" th:utext="${mesage}"></h4>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div> &lt;!&ndash; end of row &ndash;&gt;-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">-->
+<!--                                <div class="login-form">-->
+<!--                                    <form action="/dangki" method="post">-->
+<!--                                        <div class="form-group row align-items-center mb-4">-->
+<!--                                            <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">User-->
+<!--                                                name</label>-->
+<!--                                            <div class="col-12 col-sm-12 col-md-8">-->
+<!--                                                <input type="text" name="username" class="form-control" id="email"-->
+<!--                                                       placeholder="username" required>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group row align-items-center mb-4">-->
+<!--                                            <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label">Mat-->
+<!--                                                khau</label>-->
+<!--                                            <div class="col-12 col-sm-12 col-md-8">-->
+<!--                                                <input type="password" class="form-control" name="pass1" id="c-password"-->
+<!--                                                       placeholder="Password" required>-->
+
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="form-group row align-items-center mb-4">-->
+<!--                                            <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label">Nhap-->
+<!--                                                lai mat khau</label>-->
+<!--                                            <div class="col-12 col-sm-12 col-md-8">-->
+<!--                                                <input type="password" class="form-control" name="pass2" id="c-password"-->
+<!--                                                       placeholder="Re-Password" required>-->
+
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="login-box mt-5 text-center">-->
+<!--                                            <button type="submit" class="btn btn-secondary mb-4 mt-4">Dang Ki</button>-->
+<!--                                        </div>-->
+
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div> &lt;!&ndash; end of user-login &ndash;&gt;-->
+<!--                </main> &lt;!&ndash; end of #primary &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div> &lt;!&ndash; end of row &ndash;&gt;-->
+<!--    </div> &lt;!&ndash; end of container &ndash;&gt;-->
+<!--</div>-->
+<!-- end login-->
+
+<!-- scroll to top -->
+<div class="scroll-top not-visible">
+    <i class="fa fa-angle-up"></i>
+</div> <!-- /End Scroll to Top -->
+
+<!-- footer area start -->
+<footer>
+    <!-- news-letter area start -->
+    <div class="newsletter-group">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="newsletter-box">
+                        <div class="newsletter-inner">
+                            <div class="newsletter-title">
+                                <h3>Đăng ký để nhận thông tin mới nhất</h3>
+                                <p>Hãy là người đầu tiên biết. Đăng ký nhận bản tin ngày hôm nay</p>
+                            </div>
+                            <div class="newsletter-box">
+                                <form id="mc-form">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="link-follow">
+                            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                            <a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a>
+                            <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- news-letter area end -->
+    <!-- footer top area start -->
+    <div class="footer-top pt-50 pb-50">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <div class="footer-logo mb-30">
+                                <a href="index.html">
+                                    <img src="assets/img/logo/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <p>Classic Fashion Shop.</p>
+                            <div class="payment-method">
+                                <h4>payment</h4>
+                                <img src="assets/img/payment/payment.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Information</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>contact us</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><span>Address:</span>Khoa CNTT- DHCNHN</li>
+                                    <li><span>email:</span> nguyenducduy131098@gmail.com</li>
+                                    <li><span>Call us:</span> <strong>0355636650</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Our FaceBook</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="twitter-article">
+                                <div class="twitter-text">
+                                    Classic Fashion Shop<a href="#">@ClassicFashionShop</a><br>
+                                    <a href="#">https://facebook.com</a>
+                                    <span class="tweet-time"><i class="fa fa-twitter"></i><a href="#">30 sep</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+            </div>
+        </div>
+    </div>
+    <!-- footer top area end -->
+    <!-- footer bottom area start -->
+    <div class="footer-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom-content">
+                        <div class="footer-copyright">
+                            <p>Copyright © 2020 <a href="#">Classic Fashion Shop </a>. All Right Reserved</p>
+                        </div>
+                        <div class="footer-custom-link">
+                            <a href="#">Brands</a>
+                            <a href="#">Specials</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer bottom area end -->
+</footer>
+<!-- footer area end -->
+
+<!-- Quick view modal start -->
+<div class="modal fade" id="quickk_view">
+    <div class="container">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="product-large-slider mb-20">
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-4.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-5.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-6.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-7.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-8.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-9.jpg" alt=""/>
+                                </div>
+                            </div>
+                            <div class="pro-nav">
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-4.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-5.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-6.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-7.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-8.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-9.jpg" alt=""/></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="product-details-inner">
+                                <div class="product-details-contentt">
+                                    <div class="pro-details-name mb-10">
+                                        <h3>Bose SoundLink Bluetooth Speaker</h3>
+                                    </div>
+                                    <div class="pro-details-review mb-20">
+                                        <ul>
+                                            <li>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                            </li>
+                                            <li><a href="#">1 Reviews</a></li>
+                                            <li><a href="#">Write a Review</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="price-box mb-15">
+                                        <span class="regular-price"><span class="special-price">£50.00</span></span>
+                                        <span class="old-price"><del>£60.00</del></span>
+                                    </div>
+                                    <div class="product-detail-sort-des pb-20">
+                                        <p>Canon's press material for the EOS 5D states that it 'defines (a) new D-SLR
+                                            category', while we're not typically too concerned</p>
+                                    </div>
+                                    <div class="pro-details-list pt-20">
+                                        <ul>
+                                            <li><span>Availability :</span>In Stock</li>
+                                        </ul>
+                                    </div>
+                                    <div class="product-availabily-option mt-15 mb-15">
+                                        <h3>Available Options</h3>
+                                        <div class="color-optionn">
+                                            <h4><sup>*</sup>color</h4>
+                                            <ul>
+                                                <li>
+                                                    <a class="c-black" href="#" title="Black"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-blue" href="#" title="Blue"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-brown" href="#" title="Brown"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-gray" href="#" title="Gray"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-red" href="#" title="Red"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="pro-quantity-box mb-30">
+                                        <div class="qty-boxx">
+                                            <label>qty :</label>
+                                            <input type="text" placeholder="0">
+                                            <button class="btn-cart lg-btn">add to cart</button>
+                                        </div>
+                                    </div>
+                                    <div class="pro-social-sharing">
+                                        <label>share :</label>
+                                        <ul>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-facebook" title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                    <span>like 0</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-twitter" title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                    <span>tweet</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-google" title="Google Plus">
+                                                    <i class="fa fa-google-plus"></i>
+                                                    <span>google +</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quick view modal end -->
+
+
+<!-- all js include here -->
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/plugins.js}"></script>
+<script th:src="@{/assets/js/ajax-mail.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+</body>
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/product-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
+</html>

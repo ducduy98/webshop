@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Change Password</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        tbody > tr > td {
+            padding: 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/quanlidonhang}">Quản lí tài khoản nhân viên</a>
+    <a th:href="@{/quanlidonhang}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlidonhang}">Quản lí sale</a>
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+    </div>
+    <div class="row">
+
+        <div class="container p-6">
+
+            <!-- them ma code moi -->
+
+            <h2>Nhập lại tài khoản....</h2>
+            <form>
+                <div class="form-group">
+                    <label for="email">Tài khoản:</label>
+                    <input type="text" class="form-control" ng-model="taikhoan" id="email" placeholder="tai khoan ...">
+                </div>
+                <div class="form-group">
+                    <label>Password :</label>
+                    <input type="password" class="form-control" placeholder="Pass ..." ng-model="pass">
+                </div>
+
+                <button type="button" class="btn btn-info" ng-click="check()">Check</button>
+            </form>
+
+            <br>
+            <div ng-if="2==status">
+                <div class="form-group">
+                    <label>Password :</label>
+                    <input type="password" id="pass1" class="form-control" placeholder="Pass ..." ng-model="password1">
+                </div>
+
+                <div class="form-group">
+                    <label>Re-Password :</label>
+                    <input type="password" id="pass2" class="form-control" placeholder="Re-Pass ..." ng-model="repassword1">
+                </div>
+
+                <button type="button" class="btn btn-info" ng-click="update()">Change Password</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('productController', function ($scope, $http) {
+        $scope.macode = null;
+        $scope.status = 1;
+        $scope.check = function () {
+            $http({
+                method:"POST",
+                url:"/apinhanvien",
+                data:{
+                    id:$scope.taikhoan,
+                    pass:$scope.pass,
+                }
+            }).then(function(successCallback){
+                if("success"==successCallback.data.message){
+                    $scope.status=2;
+                }else{
+                    $scope.status=1;
+                    swal({
+                        icon: "error",
+                        title:successCallback.data.message,
+                    })
+                }
+            })
+
+        }
+
+        $scope.update = function () {
+            var pass1=$("#pass1").val();
+            var pass2=$("#pass2").val();
+            if(pass1==pass2){
+
+                $http({
+                    method: "PUT",
+                    url: "/apinhanvien",
+                    data: {
+                        id: $scope.taikhoan,
+                        pass: pass1,
+                    }
+                }).then(function (result) {
+
+                    swal({
+                        title: "update thanh cong",
+                        icon: "success",
+                    })
+                },function (errorCallback) {
+                    swal({
+                        title: "update that bai",
+                        icon: "error",
+                    })
+                })
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

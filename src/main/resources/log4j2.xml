@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyy-MM-dd'T'HH:mm:ss.SSSZ %p %m%n</Property>
+        <Property name="APP_LOG_ROOT">c:/temp</Property>
+        <Property name="LOG_DIR">d:/application</Property>
+    </Properties>
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"></PatternLayout>
+        </Console>
+
+        <RollingFile
+                name="LogToFile"
+                fileName="application.log"
+                filePattern="${LOG_DIR}/application.%i.log.gz"
+                ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="500KB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+
+        <RollingFile name="fileLogger" fileName="app.log" filePattern="${LOG_DIR}/app-%d{yyyy-MM-dd}.log">
+            <!-- Except Error -->
+            <ThresholdFilter level="error" onMatch="DENY" onMismatch="ACCEPT"/>
+            <PatternLayout>
+                <pattern>%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %level %logger{36} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.tttn.spring.webshop" level="debug" additivity="false">
+            <AppenderRef ref="LogToConsole"></AppenderRef>
+
+            <AppenderRef ref="LogToFile"></AppenderRef>
+        </Logger> 
+        <Root>
+            <AppenderRef ref="LogToConsole"></AppenderRef>
+
+            <AppenderRef ref="LogToFile"></AppenderRef>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+        tbody > tr > td {
+            padding : 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/code}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlitaikhoan}">Quản lí tài khoản nhân viên</a>
+    <!--    <a th:href="@{/quanlidonhang}">Quản lí sale</a>-->
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
+    </div>
+    <div class="row">
+        <div id="searchForm" class="col-sm-5">
+            <form>
+                <div class="form-group">
+                    <h3>Mã phiếu : <span th:utext="${maphieu}"></span></h3>
+                    <input type="hidden" ng-model="maphieu" id="maphieu" th:value="${maphieu}">
+                </div>
+
+                <div class="form-group">
+                    <label>Sản phẩm:</label>
+                    <input type="email" class="form-control" ng-keyup="timkiem()" id="sanpham" placeholder="Tìm kiếm sản phẩm">
+                    <input type="hidden" id="idproduct" ng-model="product" class="form-control" >
+
+                    <div id="result" style="margin-top: 5px;position: absolute; background-color: gray;display: none" >
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr ng-repeat="s in search" ng-click="chon(s.idproduct,s.product)">
+                                <td><img ng-src="/{{s.image}}" style="width: 50px; height: 50px"></td>
+                                <td>{{s.product}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label>Size:</label>
+                    <input type="number" ng-model="size" class="form-control"  placeholder="size.." name="pwd">
+                </div>
+
+                <div class="form-group">
+                    <label>Màu:</label>
+                    <select ng-model="mau" class="form-control">
+                        <option ng-repeat="c in color" value="{{c.idcolor}}">{{c.color}}</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label >Số lượng:</label>
+                    <input ng-model="number" type="number" class="form-control" placeholder="so luong ...">
+                </div>
+
+
+                <div class="form-group">
+                    <label >Giá nhập:</label>
+                    <input type="number" class="form-control" ng-model="gia" placeholder="gia nhap ...">
+                </div>
+
+
+                <button class="btn-info mt-4" ng-click="add()" >Thêm vào phiếu nhập</button>
+            </form>
+        </div>
+
+        <div class="col-sm-7 p-4">
+            <h2>Phiếu nhập : <span th:utext="${maphieu}"></span></h2>
+<!--            <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>-->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm - size - màu sắc</th>
+                    <th>Số lượng</th>
+                    <th>Giá nhập</th>
+                    <th>Tổng tiền</th>
+                    <th>Hủy phiếu nhập</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tam in phieunhaptam">
+                    <td><img ng-src="/{{tam.productSizeColorEntity.anh}}" style="width: 150px; height: 150px"></td>
+                    <td>{{tam.productSizeColorEntity.sanPham}}</td>
+                    <td>{{tam.soluong}}</td>
+                    <td>{{tam.gianhap}}</td>
+
+                    <td>{{tam.gianhap * tam.soluong}}</td>
+                    <td><i class="fa fa-close" style="font-size:48px;color:red" ng-click="cancel(tam.idnhapproduct)"></i></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            <a th:href="@{/nhaphang/back}"><button class="btn-warning">Hoàn thành !!</button></a>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('productController', function($scope,$http) {
+        //$scope.kitu=null;
+        $scope.color=null;
+        $scope.search=null;
+        $scope.phieunhaptam=null;
+        $scope.timkiem=function(){
+            var kitu=$("#sanpham").val();
+            if(" "==kitu){
+                $("#result").hide();
+            }else{
+                $http.get("/apinhaphang/search/"+kitu).then(function(result){
+                    $scope.search=result.data.data;
+                    $("#result").show();
+                })
+            }
+
+        }
+
+        $scope.getAll=function(){
+            $http.get("/apinhaphang/color").then(function(result){
+                $scope.color=result.data.data;
+            })
+        }
+        $scope.chon=function(id,name){
+            $("#idproduct").val(id);
+            $("#sanpham").val(name);
+            $("#result").hide();
+        }
+
+        $scope.add=function(){
+            console.log($("#idproduct").val()+", "+$scope.number+","+$scope.mau);
+            $http({
+                method :"POST",
+                url:"/apinhaphang/themtam",
+                data:{
+                    maphieu:$("#maphieu").val(),
+                    product: $("#idproduct").val(),
+                    size:$scope.size,
+                    color : $scope.mau,
+                    number :$scope.number,
+                    gia: $scope.gia,
+                }
+            }).then(
+                function successCallback(response){
+                    $scope.phieunhaptam=response.data.data;
+                    swal({
+                        title:"add thanh cong",
+                        icon :"success",
+                    })
+                },function errorCallback(response){
+                    swal({
+                        title: response.data.error,
+                        icon:"error",
+                    })
+                })
+        }
+        $scope.cancel=function(event){
+            var maphieu=$("#maphieu").val();
+            $http.get("/apinhaphang/cancel/"+event+"/"+maphieu).then(function(result){
+                $scope.phieunhaptam=result.data.data;
+                swal({
+                    title:result.data.message,
+                    icon:"success",
+                })
+            })
+        }
+
+
+    });
+</script>
+
+</body>
+</html>

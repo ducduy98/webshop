@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        tbody > tr > td {
+            padding: 9px;
+            height: 30px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body ng-app="MyApp" ng-controller="sexController" ng-init="getAll()">
+<div id="mySidenav" class="sidenav" ng-app>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
+    <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
+    <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
+    <a th:href="@{/code}">Quản lí mã giảm giá</a>
+    <a th:href="@{/quanlitaikhoan}">Quản lí tài khoản nhân viên</a>
+    <!--    <a th:href="@{/quanlidonhang}">Quản lí sale</a>-->
+    <a th:href="@{/total}">Thống kê</a>
+    <a th:href="@{/logout}">Log out</a>
+</div>
+
+<div id="main">
+
+    <div class="row" style="height: 50px;">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
+    </div>
+    <div class="row">
+        <div class="row p-2 m-2" style="height: 100px; width: 100%; font-size:18px;background-color: lightgrey"><span
+                style="margin-top: 40px;"><strong style=" margin-right: 20px">Admin</strong><strong
+                style=" margin-right: 20px"> > </strong> <strong>Quản lí danh mục</strong></span></div>
+        <div class="row p-2 m-2" style="background-color: lightgrey;width: 100%;">
+            <div class="col-sm-7 p-3">
+
+
+                <ul class="list-group m-4 h-auto" ng-repeat="s in sexfull">
+                    <li class="list-group-item mb-5" style="padding: 20px"><span
+                            style="font-size: 20px; margin-bottom: 15px;"><strong>{{s.sex}} <i
+                            class="fas fa-highlighter" style="float:right" ng-click="showEditSex(s.idsex)"></i></strong></span>
+                        <ol class="list-group">
+                            <li class="list-group-item" ng-repeat="c in s.categoriesByIdsex">
+                                {{c.category}} <i class="fas fa-highlighter" style="float:right"
+                                                  ng-click="showEditCategory(c.idcategory)"></i></li>
+
+                            <li class="list-group-item">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Thêm danh mục :</span>
+                                    <input type="text" id="category{{s.idsex}}" class="form-control"
+                                           ng-model="namecategory"
+                                           placeholder="nhap danh muc">
+                                    <button type="button" class="btn btn-primary" ng-click="saveCategory(s.idsex)">Thêm danh mục
+                                    </button>
+                                </div>
+                            </li>
+                        </ol>
+                    </li>
+
+                </ul>
+                <ul class="list-group m-4">
+                    <li class="list-group-item mb-5" style="padding: 20px">
+                        <div class="input-group">
+                            <span class="input-group-addon">Thêm đối tượng :</span>
+                            <input id="doituong" type="text" class="form-control" ng-model="namesex"
+                                   placeholder="nhap doi tuong">
+                            <button type="button" class="btn btn-primary" ng-click="save()">Thêm đối tượng</button>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="col-4 m-4 p-4">
+                <div id="editSex" style="display: none">
+                    <h2>Sửa đối tượng:</h2>
+                    <p>Sửa tên...</p>
+                    <form>
+                        <div class="form-group">
+                            <label>Tên đối tượng:</label>
+                            <input type="text" ng-model="gt" class="form-control">
+                        </div>
+                        <div class="form-group">
+
+                            <button type="button" class="btn-info" ng-click="updateDoiTuong(gioitinh.idsex)">Edit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="editCategory" style="display: none">
+                    <h2>Sửa danh mục:</h2>
+                    <p>Sửa tên danh mục...</p>
+                    <form>
+                        <div class="form-group">
+                            <label>Tên Danh Mục :</label>
+                            <input type="text" ng-model="dm" class="form-control">
+                        </div>
+                        <div class="form-group">
+
+                            <button type="button" class="btn-info" ng-click="updateCategory(danhmuc.idcategory)">
+                                Lưu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+</div>
+
+
+<!-- find scrip angular-->
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    var app = angular.module('MyApp', []);
+
+    app.controller('sexController', function ($scope, $http) {
+        $scope.sexfull = null;
+        $scope.gioitinh = null;
+        $scope.danhmuc = null;
+
+
+        $scope.getAll = function () {
+            $http.get("/apisex/sex").then(function (result) {
+                $scope.sexfull = result.data.data;
+                console.log($scope.sex);
+            })
+        }
+
+        $scope.save = function () {
+            $http({
+                method: "POST",
+                url: "/apisex/sex",
+                data: {
+                    sex: $scope.namesex,
+                }
+            }).then(function (result) {
+                $scope.sexfull = result.data.data;
+                $scope.namesex = null;
+            })
+        }
+
+        $scope.saveCategory = function (event) {
+            var id = "#category" + event;
+            $http({
+                method: "POST",
+                url: "/apisex/sex/category",
+                data: {
+                    idSex: event,
+                    category: $(id).val(),
+                }
+            }).then(function (result) {
+                $scope.sexfull = result.data.data;
+
+            })
+        }
+
+        $scope.kiemtra = function () {
+            console.log($("#danhmuc").val());
+        }
+
+        $scope.showEditSex = function (id) {
+            console.log("chay vao trong editsex show");
+            $("#editSex").show();
+            $("#editCategory").hide();
+            $http.get("/apisex/sex/" + id).then(function (result) {
+                $scope.gt = result.data.data.sex;
+                $scope.dm = null;
+                $scope.gioitinh = result.data.data;
+                $scope.danhmuc = null;
+            })
+
+
+        }
+
+        $scope.showEditCategory = function (id) {
+            console.log("chay vao trong editcategory show");
+            $("#editSex").hide();
+            $("#editCategory").show();
+            $http.get("/apisex/sex/category/" + id).then(function (result) {
+                $scope.dm = result.data.data.category;
+                $scope.gt = null;
+                $scope.danhmuc = result.data.data;
+                $scope.gioitinh = null;
+            })
+
+
+        }
+
+        $scope.updateDoiTuong=function(event){
+
+            $http({
+                method: "PUT",
+                url: "/apisex/sex",
+                data: {
+                    idSex: event,
+                    sex: $scope.gt,
+                }
+            }).then(function (result) {
+                $scope.sexfull = result.data.data;
+                swal({
+                    icon:"success",
+                    title:result.data.message,
+                });
+                $scope.dm = null;
+                $scope.gt = null;
+                $scope.danhmuc =null;
+                $scope.gioitinh = null;
+                $("#editSex").hide();
+                $("#editCategory").hide();
+
+            })
+        }
+
+        $scope.updateCategory=function(event){
+
+            $http({
+                method: "PUT",
+                url: "/apisex/sex/category",
+                data: {
+                    idCategory: event,
+                    category: $scope.dm,
+                }
+            }).then(function (result) {
+                $scope.sexfull = result.data.data;
+                swal({
+                    icon:"success",
+                    title:result.data.message,
+                });
+                $scope.dm = null;
+                $scope.gt = null;
+                $scope.danhmuc =null;
+                $scope.gioitinh = null;
+                $("#editSex").hide();
+                $("#editCategory").hide();
+
+            })
+        }
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Page Title -->
+    <title>Classic Fashion Shop</title>
+    <!--Fevicon-->
+    <link rel="icon" th:href="@{/assets/img/icon/favicon.ico}" type="image/x-icon"/>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- linear-icon -->
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/linear-icon.css}">
+    <!-- all css plugins css -->
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+    <!-- default style -->
+    <link rel="stylesheet" th:href="@{/assets/css/default.css}">
+    <!-- Main Style css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- responsive css -->
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+
+    <!-- Modernizer JS -->
+    <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style type="text/css">
+        .selected {
+            background-color: cornflowerblue;
+        }
+        input[type=checkbox] {
+            position: relative;
+            cursor: pointer;
+        }
+        input[type=checkbox]:before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            border: 2px solid #555555;
+            border-radius: 3px;
+            background-color: white;
+        }
+        input[type=checkbox]:checked:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+            top: 2px;
+            left: 6px;
+        }
+    </style>
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- header area start -->
+
+<header class="header-pos">
+    <div class="header-top black-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="header-top-left">
+                        <ul>
+                            <li><span>Classic Fashion Shop </span></li>
+                            <li>Chất lượng làm nên thương hiệu</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="box box-right">
+                        <ul>
+                            <li class="settings">
+                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
+                                <ul class="box-dropdown ha-dropdown">
+                                    <li><a href="login.html">Đăng kí</a></li>
+                                    <li><a href="login.html">Đăng nhập</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle home-header2 theme-bg">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                    <div class="logo">
+                        <a th:href="@{/trangchu}"><img src="assets/img/logo/logo.png" alt="brand-logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-12 order-sm-last">
+                    <div class="header-middle-inner">
+                        <form th:action="@{/timkiem}" method="get">
+                            <input type="text" name="tukhoa" class="top-cat-field" placeholder="Tìm kiếm sản phẩm...">
+                            <input type="submit" class="top-search-btn" value="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-12 col-sm-8 order-lg-last">
+                    <div class="mini-cart-option">
+                        <ul>
+
+                            <li class="my-cart">
+                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
+                                        class="count" th:utext="${sizeCart}"></span>my cart</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-top-menu menu-style2 mb-40 sticker">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="top-main-menu">
+                        <div class="main-menu">
+                            <nav id="mobile-menu">
+                                <ul>
+                                    <li><a th:href="@{/trangchu}">Trang chủ<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li><a th:href="@{/about}">Thông tin<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li class="static"><a href="#">FaceBook Page<span
+                                            class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+
+
+                                </ul>
+                            </nav>
+                        </div> <!-- </div> end main menu -->
+
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- header area end -->
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/trangchu}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<!-- Start cart Wrapper -->
+<div class="shopping-cart-wrapper pb-70">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <main id="primary" class="site-main">
+                    <div class="shopping-cart">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <form th:action="@{/muaHang}" method="get">
+                                <div class="section-title">
+                                    <h3>My Cart</h3>
+                                </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tableSelect">
+                                            <thead>
+                                            <tr>
+                                                <td></td>
+                                                <td>Mã sản phẩm</td>
+                                                <td>Ảnh</td>
+
+                                                <td>Tên sản phẩm</td>
+
+                                                <td>Só lượng</td>
+                                                <td>Giá tiền</td>
+                                                <td>Thành tiền</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="selected" th:each="gioHang : ${listCarts}">
+                                                <input type="hidden" name="idGioHang" th:value="${gioHang.getIdcart()}">
+                                                <td class="clickTD"><input type="checkbox" checked class="click"
+                                                                           name="check1" th:value="${gioHang.getIdcart()}"></td>
+                                                <td id="ma"
+                                                    th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().getIdproduct()}"></td>
+                                                <td>
+                                                    <a href="product-details.html"><img
+                                                            th:src="@{|/${gioHang.getProductSizeColorEntity().getProductByProduct().getImage()}|}"
+                                                            alt="Cart Product Image" title="Compete Track Tote"
+                                                            class="img-thumbnail"></a>
+                                                </td>
+                                                <td>
+                                                    <a href="product-details.html"
+                                                       th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().getProduct()}"></a>
+                                                    <span>Date : <span
+                                                            th:utext="${gioHang.forMartDate()}"></span></span>
+                                                    <span>Color: <span
+                                                            th:utext="${gioHang.getProductSizeColorEntity().getColorByColor().getColor()}"></span></span>
+                                                    <span>Size: <span
+                                                            th:utext="${gioHang.getProductSizeColorEntity().getSizeBySize().getSize()}"></span></span>
+                                                </td>
+
+                                                <td>
+                                                    <div class="input-group btn-block">
+                                                        <div class="product-qty">
+                                                            <input type="text" th:value="${gioHang.getSoluong()}" readonly>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().formatCurrent()}"></td>
+                                                <td class="total"  th:utext="${gioHang.forMatTienTe()}"></td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+
+                                <div class="cart-accordion-wrapper mt-full mt-40">
+                                    <h3>Bạn có muốn tiếp tục ?</h3>
+
+                                    <div id="cart_accordion" class="mt-4" role="tablist">
+                                        <div class="card">
+                                            <div class="card-header" role="tab" id="headingCoupon">
+                                                <h4 class="mb-0">
+                                                    <a data-toggle="collapse" href="#collapseCoupon"
+                                                       aria-expanded="false" aria-controls="collapseCoupon">Sử dụng mã giảm giá<i class="ion ion-ios-arrow-down"></i></a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseCoupon" class="collapse" role="tabpanel"
+                                                 aria-labelledby="headingCoupon" data-parent="#cart_accordion">
+                                                <div class="card-body">
+                                                    <div class="input-group">
+                                                        <label class="col-12 col-sm-12 col-md-3" for="input-coupon">Nhập mã giảm giá..</label>
+                                                        <div class="col-12 col-sm-12 col-md-9">
+                                                            <div class="input-group">
+                                                                <input type="text" name="sale" value=""
+                                                                       placeholder="mã giảm giá của bạn..."
+                                                                       id="sale" class="form-control">
+                                                                <input type="button" value="Apply Coupon"
+                                                                       id="clickSale"
+                                                                       class="btn btn-secondary cart-pg">
+                                                                <div>
+                                                                    <p style="color: red" id="hanDung"></p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                <div class="cart-amount-wrapper">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-4 offset-md-8">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <td><strong>Tổng tiền:</strong></td>
+                                                    <td id="giaTien"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Phải trả:</strong></td>
+                                                    <td><span class="color-primary" id="thucTien"></span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cart-button-wrapper d-flex justify-content-between mt-4">
+
+                                    <button type="submit" class="btn btn-secondary warning align-self-end float-right">Mua hàng</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> <!-- end of shopping-cart -->
+                </main> <!-- end of #primary -->
+            </div>
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div>
+<!-- End cart Wrapper -->
+
+<!-- scroll to top -->
+<div class="scroll-top not-visible">
+    <i class="fa fa-angle-up"></i>
+</div> <!-- /End Scroll to Top -->
+
+<!-- footer area start -->
+<footer>
+    <!-- news-letter area start -->
+    <div class="newsletter-group">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="newsletter-box">
+                        <div class="newsletter-inner">
+                            <div class="newsletter-title">
+                                <h3>Đăng ký để nhận thông tin mới nhất</h3>
+                                <p>Hãy là người đầu tiên biết. Đăng ký nhận bản tin ngày hôm nay</p>
+                            </div>
+                            <div class="newsletter-box">
+                                <form id="mc-form">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="link-follow">
+                            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                            <a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a>
+                            <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- news-letter area end -->
+    <!-- footer top area start -->
+    <div class="footer-top pt-50 pb-50">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <div class="footer-logo mb-30">
+                                <a href="index.html">
+                                    <img src="assets/img/logo/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <p>Classic Fashion Shop.</p>
+                            <div class="payment-method">
+                                <h4>payment</h4>
+                                <img src="assets/img/payment/payment.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Information</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>contact us</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><span>Address:</span>Khoa CNTT- DHCNHN</li>
+                                    <li><span>email:</span> nguyenducduy131098@gmail.com</li>
+                                    <li><span>Call us:</span> <strong>0355636650</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Our FaceBook</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="twitter-article">
+                                <div class="twitter-text">
+                                    Classic Fashion Shop<a href="#">@ClassicFashionShop</a><br>
+                                    <a href="#">https://facebook.com</a>
+                                    <span class="tweet-time"><i class="fa fa-twitter"></i><a href="#">30 sep</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+            </div>
+        </div>
+    </div>
+    <!-- footer top area end -->
+    <!-- footer bottom area start -->
+    <div class="footer-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom-content">
+                        <div class="footer-copyright">
+                            <p>Copyright © 2020 <a href="#">Classic Fashion Shop </a>. All Right Reserved</p>
+                        </div>
+                        <div class="footer-custom-link">
+                            <a href="#">Brands</a>
+                            <a href="#">Specials</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer bottom area end -->
+</footer>
+<!-- footer area end -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        tinhTien();
+
+        $("#clickSale").click(function(){
+            var sale=document.getElementById("sale").value;
+            console.log("tinh tien "+tinhTien());
+            $.ajax({
+                url:"/addToCart/useSale/"+sale+"/"+tinhTien(),
+                type:"get",
+
+                success:function(data){
+                    if(data==0){
+                        $("#hanDung").html("mã giảm giá không phù hợp với đơn hàng này !!!");
+                    }else if(data==-1){
+                        $("#hanDung").html("mã giảm giá đã hết hạn hoặc bạn nhập mã giảm giá không đúng")
+                    }else {
+                        $("#hanDung").html("áp dụng thành công ");
+                        $("#thucTien").html(data);
+                    }
+                }
+
+            })
+        })
+
+        $("#tableSelect").on('click', 'tbody > tr > td .click', function (event) {
+
+            if ($(this).parent().parent().hasClass("selected")) {
+                $(this).parent().parent().removeClass('selected')
+            } else {
+                $(this).parent().parent().addClass('selected');
+            }
+            tinhTien();
+
+
+        })
+
+
+    })
+
+    function tinhTien() {
+        var tongTien = 0;
+        $("#tableSelect > tbody >tr").each(function (event) {
+            if ($(this).hasClass("selected")) {
+                var giatri= $(this).find(".total").text().split(" ")[0].split(".");
+                console.log(giatri);
+                var tong="";
+                giatri.forEach(e=>tong+=e);
+
+
+                tongTien += Number(tong);
+
+            }
+        })
+        console.log(tongTien);
+        $("#giaTien").html(tongTien);
+        $("#thucTien").html(tongTien);
+        return tongTien;
+    }
+
+
+    $("#btnTinhTien").click(function () {
+        $("#tableSelect > tbody >tr").each(function (event) {
+            if ($(this).hasClass("selected")) {
+                var giatriArray = $(this).find("#total").text().split(" ",1).split(".");
+                var chuoi="";
+                giatriArray.each(e=>chuoi+=e);
+                console.log(chuoi);
+                tongTien += Number(chuoi);
+
+            }
+        })
+        console.log(tongTien);
+    })
+
+</script>
+
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/plugins.js}"></script>
+<script th:src="@{/assets/js/ajax-mail.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+</body>
+</body>
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
+</html>

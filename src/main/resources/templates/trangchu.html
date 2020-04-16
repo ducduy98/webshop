@@ -1,0 +1,861 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:34 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <!-- Page Title -->
+    <title>Classic Fashion Shop</title>
+    <!--Fevicon-->
+    <link rel="icon" th:href="@{/assets/img/icon/favicon.ico}" type="image/x-icon"/>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!-- linear-icon -->
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/linear-icon.css}">
+    <!-- all css plugins css -->
+    <link rel="stylesheet" th:href="@{/assets/css/plugins.css}">
+    <!-- default style -->
+    <link rel="stylesheet" th:href="@{/assets/css/default.css}">
+    <!-- Main Style css -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <!-- responsive css -->
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+
+    <!-- Modernizer JS -->
+    <script th:src="@{/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- header area start -->
+<header class="header-pos">
+    <div class="header-top black-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                    <div class="header-top-left">
+                        <ul>
+                            <li><span>Classic Fashion Shop </span></li>
+                            <li>Chất lượng làm nên thương hiệu</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="box box-right">
+                        <ul>
+                            <li class="settings">
+                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
+                                <ul class="box-dropdown ha-dropdown">
+                                    <li th:if="${user!=1}"><a th:href="@{/dangki}">Đăng kí</a></li>
+                                    <li th:if="${user!=1}"><a th:href="@{/loginShop}">Đăng nhập</a></li>
+                                    <li th:if="${admin==1}"><a th:href="@{/homeAdmin}">For Admin</a></li>
+                                    <li th:if="${user==1}"><a th:href="@{/changepass}">Đổi mật khẩu</a></li>
+                                    <li th:if="${user==1}"><a th:href="@{/logout}">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-middle home-header2 theme-bg">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                    <div class="logo">
+                        <a th:href="@{/trangchu}"><img src="assets/img/logo/logo.png" alt="brand-logo"></a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-12 order-sm-last">
+                    <div class="header-middle-inner">
+                        <form th:action="@{/timkiem}" method="get">
+                            <input type="text" name="tukhoa" class="top-cat-field" placeholder="Tìm kiếm...">
+                            <input type="submit" class="top-search-btn" value="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-8 col-12 col-sm-8 order-lg-last">
+                    <div class="mini-cart-option">
+                        <ul>
+                            <li class="my-cart" th:if="${filter==1}">
+                                <a class="ha-toggle" href="#"><span class="lnr lnr-cart"></span><span class="count" th:utext="${soluongcode}"></span>Mã giảm giá</a>
+                                <ul class="mini-cart-drop-down ha-dropdown">
+                                    <li th:each="c : ${code}">
+                                        <ol>
+                                            <li>
+                                                <h4 style="color: #fedc19" th:utext="${c.getChitiet()}"></h4>
+                                                <br>
+                                            </li>
+                                            <li>
+                                                <div class="subtotal-text">Giảm giá: </div>
+                                                <div class="subtotal-price"><span th:utext="${c.getGiamGia()}"></span></div>
+                                            </li>
+                                            <li>
+                                                <div class="subtotal-text">Áp dụng từ: </div>
+                                                <div class="subtotal-price"><span th:utext="${c.getPriceMin()}"></span></div>
+                                            </li>
+                                            <br>
+                                            <hr style="width: 50%;">
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="my-cart">
+                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
+                                        class="count" th:utext="${sizeCart}"></span>Giỏ hàng</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-top-menu menu-style2 mb-40 sticker">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="top-main-menu">
+                        <div class="main-menu">
+                            <nav id="mobile-menu">
+                                <ul>
+                                    <li><a th:href="@{/trangchu}">Trang chủ<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li><a th:href="@{/about}">Thông tin<span class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+                                    <li class="static"><a href="#">FaceBook Page<span
+                                            class="lnr lnr-chevron-down"></span></a>
+
+                                    </li>
+
+
+                                </ul>
+                            </nav>
+                        </div> <!-- </div> end main menu -->
+
+                    </div>
+                </div>
+                <div class="col-12 d-block d-lg-none">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ket thuc banner-->
+
+
+<!-- header area end -->
+
+<!-- slider area start -->
+<div class="banner-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="categories-menu-bar cat-menu-style2">
+                    <div class="categories-menu-btn ha-toggle">
+                        <div class="left">
+                            <i class="lnr lnr-text-align-left"></i>
+                            <span>Danh Mục</span>
+                        </div>
+                        <div class="right">
+                            <i class="lnr lnr-chevron-down"></i>
+                        </div>
+                    </div>
+                    <nav class="categorie-menus ha-dropdown">
+                        <!--
+                             category danh muc theo gioi tinh
+                        -->
+
+                        <ul id="menu2">
+                            <div th:each="sex : ${listSex}">
+                                <li><a href="#" th:utext="${sex.getSex()}"><span
+                                        class="lnr lnr-chevron-right"></span></a>
+                                    <ul class="cat-submenu">
+                                        <li th:each="category : ${sex.getCategoriesByIdsex()}">
+                                            <a th:href="@{|/showmore/${category.getIdcategory()}/${category.getCategory().replaceAll(' ','_')}|}"><span th:utext="${category.getCategory()}"></span></a></li>
+
+                                    </ul>
+                                </li>
+                            </div>
+
+                        </ul>
+
+                        <!-- ket thuc category -->
+
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="hero-slider-active hero-style-2 slick-dot-style slider-arrow-style">
+                    <div class="single-slider d-flex align-items-center"
+                         style="background-image: url(assets/img/slider/slide.webp);">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="slider-text">
+                                        <h1>Dress<br> For Lady</h1>
+                                        <p>Sale for 4 days only</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-slider d-flex align-items-center"
+                         style="background-image: url(assets/img/slider/slider2-home2.webp);">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="slider-text">
+                                        <h1>Spring <br>Fashion</h1>
+                                        <p>Spring big sale 2020</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12">
+                <div class="home2-banner-right">
+                    <div class="banner-right-thumb mb-30">
+                        <a href="#">
+                            <img src="assets/img/banner/banner3.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="banner-right-thumb mb-30">
+                        <a href="#">
+                            <img src="assets/img/banner/banner2.jpg" alt="" height="930">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- slider area end -->
+
+<!-- main wrapper start -->
+<div class="home2-main-wrapper mt-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="home2-left-sidebar">
+
+                    <div class="sidebar-static-banner mb-40">
+                        <div class="sidebar-static-thumb">
+                            <a href="#"><img src="assets/img/banner/banner1.jpg" alt=""></a>
+                        </div>
+                    </div> <!--  end static banner -->
+                    <div class="latest-product-sidebar mb-40">
+                        <div class="section-title flash-title">
+                            <h3><span>Bán</span> Nhiều Nhất</h3>
+                        </div>
+                        <div class="latest-slide-active owl-carousel">
+                            <div class="latest-single-slide">
+                                <div class="latest-single-item" th:each="buyMany1 :${buyMany}" th:if="${buyMany1.getStatus()==1}">
+                                    <div class="latest-thumb">
+                                        <a th:href="@{|/product_details/${buyMany1.getIdproduct()}/${buyMany1.getProduct().replaceAll(' ','_')}|}"><img th:src="@{|${buyMany1.getImage()}|}" alt=""></a>
+                                    </div>
+                                    <div class="latest-pro-content">
+                                        <h4><a th:href="@{|/product_details/${buyMany1.getIdproduct()}/${buyMany1.getProduct().replaceAll(' ','_')}|}"><span
+                                                th:utext="${buyMany1.getProduct()}"></span></a></h4>
+                                        <div class="price-box">
+                                            <span th:if="${buyMany1.getPrice()>buyMany1.giamGia()}" class="regular-price"><span class="special-price" th:utext="${buyMany1.giamGia()}"></span></span>
+                                            <span th:if="${buyMany1.getPrice()== buyMany1.giamGia()}" class="regular-price"><span class="special-price" th:utext="${buyMany1.getPrice()}"></span></span>
+                                            <span th:if="${buyMany1.getPrice()>buyMany1.giamGia()}" class="old-price"><del th:utext="${buyMany1.getPrice()}"></del></span>
+                                        </div>
+                                    </div>
+                                </div><!--  end latest single item -->
+                                <!--  end latest single item -->
+                            </div>
+                            <div class="latest-single-slide">
+
+                                <div class="latest-single-item">
+                                    <div class="latest-thumb">
+                                        <a href="product-details.html"><img src="assets/img/product/product-12.jpg"
+                                                                            alt=""></a>
+                                    </div>
+                                    <div class="latest-pro-content">
+                                        <h4><a href="product-details.html">Bose SoundLink Bluetooth Speaker</a></h4>
+                                        <div class="price-box">
+                                            <span class="regular-price"><span class="special-price">£65.00</span></span>
+                                            <span class="old-price"><del>£90.00</del></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  end latest single item -->
+                                <!--  end latest single item -->
+                            </div>
+                        </div>
+                    </div> <!--  end latest product -->
+                    <div class="latest-blogg mb-40">
+                        <div class="section-title flash-title">
+                            <h3><span>Latest</span> Blog</h3>
+                        </div>
+                        <div class="latest-blog-active owl-carousel owl-arrow-style">
+                            <div class="single-blogg-item">
+                                <div class="blogg-thumb">
+                                    <a href="blog-details.html">
+                                        <img src="assets/img/blog/blog1.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="blogg-content">
+                                    <span class="post-date">20 Jan 2020</span>
+                                    <h5><a href="blog-details.html">Ngày hội thời trang mùa xuân 2020</a></h5>
+                                    <p>Với sự góp mặt của hàng chục nhà thiết kế nổi tiếng và hàng ngàn sản phẩm mới...</p>
+                                </div>
+                            </div>
+                            <div class="single-blogg-item">
+                                <div class="blogg-thumb">
+                                    <a href="blog-details.html">
+                                        <img src="assets/img/blog/blog2.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="blogg-content">
+                                    <span class="post-date">20 Jan 2020</span>
+                                    <h5><a href="blog-details.html">Ngày hội thời trang mùa xuân 2020</a></h5>
+                                    <p>Với sự góp mặt của hàng chục nhà thiết kế nổi tiếng và hàng ngàn sản phẩm mới...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--  end latest blog -->
+                    <div class="testimonial-one">
+                        <div class="section-title flash-title">
+                            <h3><span>Testimonials</span></h3>
+                        </div>
+                        <div class="testimonial-active owl-carousel owl-dot-style">
+                            <div class="testimonial-single-item">
+                                <div class="testimonial-avater">
+                                    <div class="testimonial-thumb">
+                                        <img src="assets/img/testimonial/testimonial1.png" alt="">
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <h6>Amber</h6>
+                                        <div class="testimonial-rating">
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-caption">
+                                    <div class="testi-quote">
+                                        <a href="#"> Code, template and others are very good. The support has served me
+                                            immediately and solved my problems when I need help. Are to be
+                                            congratulated. Att Renan Andr..</a>
+                                    </div>
+                                </div>
+                            </div> <!--  end single item -->
+                            <div class="testimonial-single-item">
+                                <div class="testimonial-avater">
+                                    <div class="testimonial-thumb">
+                                        <img src="assets/img/testimonial/testimonial2.png" alt="">
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <h6>Stefano</h6>
+                                        <div class="testimonial-rating">
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-caption">
+                                    <div class="testi-quote">
+                                        <a href="#"> Code, template and others are very good. The support has served me
+                                            immediately and solved my problems when I need help. Are to be
+                                            congratulated. Att Renan Andr..</a>
+                                    </div>
+                                </div>
+                            </div> <!--  end single item -->
+                            <div class="testimonial-single-item">
+                                <div class="testimonial-avater">
+                                    <div class="testimonial-thumb">
+                                        <img src="assets/img/testimonial/testimonial1.png" alt="">
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <h6>Amber</h6>
+                                        <div class="testimonial-rating">
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-caption">
+                                    <div class="testi-quote">
+                                        <a href="#"> Code, template and others are very good. The support has served me
+                                            immediately and solved my problems when I need help. Are to be
+                                            congratulated. Att Renan Andr..</a>
+                                    </div>
+                                </div>
+                            </div> <!--  end single item -->
+                            <div class="testimonial-single-item">
+                                <div class="testimonial-avater">
+                                    <div class="testimonial-thumb">
+                                        <img src="assets/img/testimonial/testimonial2.png" alt="">
+                                    </div>
+                                    <div class="testimonial-author">
+                                        <h6>Stefano</h6>
+                                        <div class="testimonial-rating">
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                            <span class="yellow"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="testimonial-caption">
+                                    <div class="testi-quote">
+                                        <a href="#"> Code, template and others are very good. The support has served me
+                                            immediately and solved my problems when I need help. Are to be
+                                            congratulated. Att Renan Andr..</a>
+                                    </div>
+                                </div>
+                            </div> <!--  end single item -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- bat dau giao dien chinh-->
+
+
+            <div class="col-lg-9 order-first order-lg-last">
+                <div class="home2-content-wrapper">
+
+                    <!-- product wrapper area start -->
+                    <div th:each="sex : ${listSex}">
+
+                        <h2><u><i>Thời Trang <span th:utext="${sex.getSex()}"></span></i></u></h2>
+
+
+                        <div class="product-wrapper fix pb-75" th:each="category : ${sex.getCategoriesByIdsex()}">
+                            <div class="container-fluid plr-none">
+                                <div class="section-title product-spacing home2-tab-spacing">
+                                    <h3><span th:utext="${category.getCategory()}"></span></h3>
+
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="one">
+                                        <div class="product-gallary-wrapper">
+                                            <div class="product-gallary-active2 owl-carousel owl-arrow-style product-spacing">
+
+
+                                                <!-- san pham item -->
+                                                <!-- for each class product - item-->
+
+                                                <div class="product-item"
+                                                     th:each="productCategory : ${category.getProductCategoriesByIdcategory()}" th:if="${productCategory.getProductByProduct().getStatus()==1}">
+                                                    <div class="product-thumb">
+                                                        <a th:href="@{|/product_details/${productCategory.getProductByProduct().getIdproduct()}/${productCategory.getProductByProduct().getProduct().replaceAll(' ','_')}|}" >
+                                                            <img th:src="@{|${productCategory.getProductByProduct().getImage() }|}"
+                                                                 class="pri-img" style="height: 270px" alt="">
+
+                                                        </a>
+                                                        <div class="box-label">
+                                                            <div class="label-product label_new">
+                                                                <span>new</span>
+                                                            </div>
+                                                        </div>
+<!--                                                        <div class="action-links">-->
+<!--                                                            <a href="#" title="Wishlist"><i-->
+<!--                                                                    class="lnr lnr-heart"></i></a>-->
+<!--                                                            <a href="#" title="Compare"><i class="lnr lnr-sync"></i></a>-->
+<!--                                                            <a href="#" title="Quick view" data-target="#quickk_view"-->
+<!--                                                               data-toggle="modal"><i class="lnr lnr-magnifier"></i></a>-->
+<!--                                                        </div>-->
+                                                    </div>
+                                                    <div class="product-caption">
+                                                        <div class="manufacture-product">
+                                                            <p><a href="#"><span
+                                                                    th:utext="${productCategory.getCategoryByCategory().getCategory()}"></span></a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="product-name">
+                                                            <h4><a th:href="@{|/product_details/${productCategory.getProductByProduct().getIdproduct()}/${productCategory.getProductByProduct().getProduct().replaceAll(' ','_')}|}" ><span
+                                                                    th:utext="${productCategory.getProductByProduct().getProduct()}"></span></a>
+                                                            </h4>
+                                                        </div>
+
+                                                        <div class="price-box">
+                                                            <span class="regular-price"
+                                                                  th:utext="${productCategory.getProductByProduct().getPrice()}"></span>
+                                                        </div>
+<!--                                                        <button class="btn-cart" type="button">add to cart</button>-->
+                                                    </div>
+                                                </div><!-- </div> end single item -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div style="float: right;">
+                                <a class="btn-1 home-btn"
+                                   th:href="@{|/showmore/${category.getIdcategory()}/${category.getCategory().replaceAll(' ','_')}|}">show
+                                    more...</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- product wrapper area start -->
+
+
+                    <!-- home product module three end -->
+
+
+                    <!-- featured categories home2 start -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- main wrapper end -->
+
+<!-- brand area start -->
+<div class="brand-area-home2 pt-35 pb-70">
+    <div class="container-fluid">
+        <div class="brand2-slider-wrapper">
+            <div class="brand2-slider-active">
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand1.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand2.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand3.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand4.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand5.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand6.png" alt=""></a>
+                </div>
+                <div class="single-brand-logo">
+                    <a href="#"><img src="assets/img/brand/brand7.png" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- brand area end -->
+
+<!-- scroll to top -->
+<div class="scroll-top not-visible">
+    <i class="fa fa-angle-up"></i>
+</div> <!-- /End Scroll to Top -->
+
+<!-- footer area start -->
+<footer>
+    <!-- news-letter area start -->
+    <div class="newsletter-group">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="newsletter-box">
+                        <div class="newsletter-inner">
+                            <div class="newsletter-title">
+                                <h3>Đăng ký để nhận thông tin mới nhất</h3>
+                                <p>Hãy là người đầu tiên biết. Đăng ký nhận bản tin ngày hôm nay</p>
+                            </div>
+                            <div class="newsletter-box">
+                                <form id="mc-form">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="link-follow">
+                            <a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                            <a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a>
+                            <a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fa fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div><!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- news-letter area end -->
+    <!-- footer top area start -->
+    <div class="footer-top pt-50 pb-50">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <div class="footer-logo mb-30">
+                                <a href="index.html">
+                                    <img src="assets/img/logo/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <p>Classic Fashion Shop.</p>
+                            <div class="payment-method">
+                                <h4>payment</h4>
+                                <img src="assets/img/payment/payment.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Information</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Site Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>contact us</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="footer-useful-link">
+                                <ul>
+                                    <li><span>Address:</span>Khoa CNTT- DHCNHN</li>
+                                    <li><span>email:</span> nguyenducduy131098@gmail.com</li>
+                                    <li><span>Call us:</span> <strong>0355636650</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer-single-widget">
+                        <div class="widget-title">
+                            <h4>Our FaceBook</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="twitter-article">
+                                <div class="twitter-text">
+                                    Classic Fashion Shop<a href="#">@ClassicFashionShop</a><br>
+                                    <a href="#">https://facebook.com</a>
+                                    <span class="tweet-time"><i class="fa fa-twitter"></i><a href="#">30 sep</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- single widget end -->
+            </div>
+        </div>
+    </div>
+    <!-- footer top area end -->
+    <!-- footer bottom area start -->
+    <div class="footer-bottom">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="footer-bottom-content">
+                        <div class="footer-copyright">
+                            <p>Copyright © 2020 <a href="#">Classic Fashion Shop </a>. All Right Reserved</p>
+                        </div>
+                        <div class="footer-custom-link">
+                            <a href="#">Brands</a>
+                            <a href="#">Specials</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer bottom area end -->
+</footer>
+<!-- footer area end -->
+
+<!-- Quick view modal start -->
+<div class="modal fade" id="quickk_view">
+    <div class="container">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="product-large-slider mb-20">
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-4.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-5.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-6.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-7.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-8.jpg" alt=""/>
+                                </div>
+                                <div class="pro-large-img">
+                                    <img src="assets/img/product/product-9.jpg" alt=""/>
+                                </div>
+                            </div>
+                            <div class="pro-nav">
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-4.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-5.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-6.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-7.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-8.jpg" alt=""/></div>
+                                <div class="pro-nav-thumb"><img src="assets/img/product/product-9.jpg" alt=""/></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="product-details-inner">
+                                <div class="product-details-contentt">
+                                    <div class="pro-details-name mb-10">
+                                        <h3>Bose SoundLink Bluetooth Speaker</h3>
+                                    </div>
+                                    <div class="pro-details-review mb-20">
+                                        <ul>
+                                            <li>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                                <span><i class="fa fa-star"></i></span>
+                                            </li>
+                                            <li><a href="#">1 Reviews</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="price-box mb-15">
+                                        <span class="regular-price"><span class="special-price">£50.00</span></span>
+                                        <span class="old-price"><del>£60.00</del></span>
+                                    </div>
+                                    <div class="product-detail-sort-des pb-20">
+                                        <p>Canon's press material for the EOS 5D states that it 'defines (a) new D-SLR
+                                            category', while we're not typically too concerned</p>
+                                    </div>
+                                    <div class="pro-details-list pt-20">
+                                        <ul>
+                                            <li><span>Availability :</span>In Stock</li>
+                                        </ul>
+                                    </div>
+                                    <div class="product-availabily-option mt-15 mb-15">
+                                        <h3>Available Options</h3>
+                                        <div class="color-optionn">
+                                            <h4><sup>*</sup>color</h4>
+                                            <ul>
+                                                <li>
+                                                    <a class="c-black" href="#" title="Black"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-blue" href="#" title="Blue"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-brown" href="#" title="Brown"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-gray" href="#" title="Gray"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="c-red" href="#" title="Red"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="pro-quantity-box mb-30">
+                                        <div class="qty-boxx">
+                                            <label>qty :</label>
+                                            <input type="text" placeholder="0">
+                                            <button class="btn-cart lg-btn">add to cart</button>
+                                        </div>
+                                    </div>
+                                    <div class="pro-social-sharing">
+                                        <label>share :</label>
+                                        <ul>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-facebook" title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                    <span>like 0</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-twitter" title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                    <span>tweet</span>
+                                                </a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="bg-google" title="Google Plus">
+                                                    <i class="fa fa-google-plus"></i>
+                                                    <span>google +</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quick view modal end -->
+
+<!-- all js include here -->
+<script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/plugins.js}"></script>
+<script th:src="@{/assets/js/ajax-mail.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+</body>
+
+<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:43 GMT -->
+</html>
