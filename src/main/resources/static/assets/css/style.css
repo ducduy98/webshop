@@ -1256,6 +1256,7 @@ nav.m-style3 {
 }
 
 .btn-1.home-btn {
+    margin-top: 20px;
     background: #cd0a0a;
     border-radius: 6px;
     color: #111;
@@ -2225,6 +2226,7 @@ a.shop-btn:hover {
 
 /* latest product css */
 .latest-single-item {
+    margin:5px;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -2244,7 +2246,10 @@ a.shop-btn:hover {
 }
 
 .latest-thumb {
-    max-width: 110px;
+    width: 110px;
+    object-fit: cover;
+    object-position: center;
+    margin-right:10px;
 }
 
 .latest-pro-content h4 {

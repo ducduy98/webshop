@@ -74,7 +74,7 @@
 <body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lý sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -88,7 +88,7 @@
 <div id="main">
 
     <div class="row" style="height: 50px;">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
     </div>
     <div class="row">
 
@@ -103,11 +103,11 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th>Ma phieu</th>
+                        <th>Mã phiếu</th>
                         <th>Nhân viên nhập</th>
                         <th>Ngày Giờ Nhập</th>
-                        <th>So mat hang</th>
-                        <th>Chi Tiet</th>
+                        <th>Số mặt hàng</th>
+                        <th>Chi Tiết</th>
 
                     </tr>
                     </thead>

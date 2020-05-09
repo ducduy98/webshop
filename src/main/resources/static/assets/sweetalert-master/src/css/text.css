@@ -9,15 +9,15 @@
   line-height: normal;
   text-align: center;
   margin-bottom: 0px;
-  &:first-child {
-    margin-top: 26px;
-  }
-  &:not(:first-child) {
-    padding-bottom: 0;
-  }
-  &:not(:last-child) {
-    margin-bottom: 13px;
-  }
+&:first-child {
+   margin-top: 26px;
+ }
+&:not(:first-child) {
+   padding-bottom: 0;
+ }
+&:not(:last-child) {
+   margin-bottom: 13px;
+ }
 }
 
 .swal-text {
@@ -35,10 +35,10 @@
   max-width: calc(100% - 20px);
   overflow-wrap: break-word;
   box-sizing: border-box;
-  &:first-child {
-    margin-top: 45px;
-  }
-  &:last-child {
-    margin-bottom: 45px;
-  }
+&:first-child {
+   margin-top: 45px;
+ }
+&:last-child {
+   margin-bottom: 45px;
+ }
 }

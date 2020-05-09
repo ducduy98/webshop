@@ -76,7 +76,7 @@
 <body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lý sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -159,7 +159,7 @@
 
                     <td>
                         <div >
-                            <input type="number" id="{{tam.idproductSizeColor}}" placeholder="so luong..." ng-model="soluong1">
+                            <input type="number" id="{{tam.idproductSizeColor}}" placeholder="Số lượng..." ng-model="soluong1">
                             <button ng-click="update1(tam.idproductSizeColor)">Update</button>
                         </div>
                     </td>
@@ -170,8 +170,8 @@
                     <td>{{t.number}}</td>
                     <td>
                         <div>
-                            <input type="number" placeholder="so luong..." ng-model="soluong2">
-                            <button ng-click="update(t.idproductSizeColor)">Update</button>
+                            <input type="number" placeholder="Số lượng..." ng-model="soluong2">
+                            <button ng-click="update(t.idproductSizeColor)">Cập nhật</button>
                         </div>
                     </td>
                 </tr>
@@ -263,7 +263,7 @@
             $http.get("/apikho/update/"+ id1+"/"+ soluongstr).then(function (result) {
 
                 swal({
-                    title: "update thanh cong",
+                    title: "Cập nhật thành công",
                     icon: "success",
                 })
                 $scope.t=null;
@@ -279,7 +279,7 @@
             $http.get("/apikho/update/"+ id1+"/"+ soluongstr).then(function (result) {
 
                 swal({
-                    title: "update thanh cong",
+                    title: "Cập nhật thành công",
                     icon: "success",
                 })
                 $scope.t=null;

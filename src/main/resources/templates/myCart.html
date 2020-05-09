@@ -222,7 +222,7 @@
                                                 <td>Só lượng</td>
                                                 <td>Giá tiền</td>
                                                 <td>Thành tiền</td>
-                                                <td></td>
+                                                <td>Xóa</td>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -267,7 +267,7 @@
                                                     <td class="total" th:utext="${gioHang.forMatTienTe()}"></td>
                                                     <td>
                                                         <a th:href="@{/addToCart/delete/{id}(id=${gioHang.idcart})}">
-                                                            <i class="fa fa-trash text-danger"></i>
+                                                            <i class="fa fa-close" style="font-size:40px;color:red"></i>
                                                         </a>
                                                     </td>
                                                 </tr>

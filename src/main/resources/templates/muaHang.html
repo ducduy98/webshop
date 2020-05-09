@@ -134,13 +134,13 @@
 
                                     <div id="show" style="padding: 20px">
                                         <div class="form-group">
-                                            <label for="sel1">Tỉnh :</label>
+                                            <label for="sel1">Tỉnh:</label>
                                             <select class="form-control" id="sel1" ng-model="idTinh" ng-options="item.name for item in tinh"
                                                     ng-change="setHuyen()">
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sel1">Huyện :</label>
+                                            <label for="sel1">Huyện:</label>
                                             <select class="form-control" id="sel1" ng-model="idHuyen" ng-options="item.name for item in huyen"
                                                     ng-change="setXa()">
 
@@ -148,7 +148,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sel1">Xã :</label>
+                                            <label for="sel1">Xã:</label>
                                             <select class="form-control" id="sel1" ng-model="idXa" ng-options="item.name for item in xa">
 
 
@@ -160,7 +160,7 @@
                                             <input type="text" ng-model="chitiet" class="form-control" id="usr">
                                         </div>
                                         <div class="form-group">
-                                            <label for="usr">Họ tên :</label>
+                                            <label for="usr">Họ tên:</label>
                                             <input type="text" ng-model="hoten" class="form-control" id="usr">
                                         </div>
                                         <div class="form-group">
@@ -169,7 +169,7 @@
                                         </div>
                                         <br>
 
-                                        <button class="btn btn-secondary info" ng-click="addDiaChi()">Thêm / Update Địa Chỉ</button>
+                                        <button class="btn btn-secondary info" ng-click="addDiaChi()">Thêm / Cập nhật địa Chỉ</button>
                                     </div>
 
 
@@ -207,11 +207,11 @@
                                                 </div>
                                                 <div class="media-body">
                                                     <h5 th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getProduct()}"></h5>
-                                                    <p class="product-quantity">số lượng: <span th:utext="${ds.getSoluong()}"></span></p>
+                                                    <p class="product-quantity">Số lượng : <span th:utext="${ds.getSoluong()}"></span></p>
                                                     <p class="product-final-price" th:if="${ds.getProductSizeColorEntity().getProductByProduct().giamGia() < ds.getProductSizeColorEntity().getProductByProduct().getPrice()}">
-                                                        sale :<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getSaleBySale().getSale()}"></span><span>%</span></p>
-                                                    <p class="product-final-price">Giá tiền:<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getPrice()}"></span></p>
-                                                    <p class="product-final-price">Thành tiền :<span th:utext="${ds.thanhTien()}"></span></p>
+                                                        sale :<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getSaleBySale().getSale()}"></span><span>%</span>VNĐ</p>
+                                                    <p class="product-final-price">Giá tiền : <span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getPrice()}"></span></p>
+                                                    <p class="product-final-price">Thành tiền : <span th:utext="${ds.thanhTien()}"></span> VNĐ</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,11 +227,11 @@
                                                 <tbody>
 
                                                 <tr class="cart-subtotal">
-                                                    <th>Dia Chi</th>
+                                                    <th>Địa chỉ</th>
                                                     <td class="text-center">{{thongtin.chitiet}} - {{thongtin.xa}} - {{thongtin.huyen}} - {{thongtin.thanhpho}}</td>
                                                 </tr>
                                                 <tr class="cart-subtotal">
-                                                    <th>phi ship</th>
+                                                    <th>Phí Ship</th>
                                                     <td class="text-center">{{thongtin.phiShip}}</td>
                                                 </tr>
 
@@ -246,7 +246,7 @@
 
                                                 <tr class="cart-subtotal">
                                                     <input type="hidden" name="idCode" th:value="${maCode}">
-                                                    <th>ap dung ma giam gia</th>
+                                                    <th>Áp dụng mã giảm giá</th>
                                                     <input type="hidden" name="giamGia" th:value="${sale}">
                                                     <td class="text-center" th:if="${sale >0}"> - <span th:utext="${sale}"></span></td>
                                                     <td class="text-center" th:if="${sale == 0}">-0 đ</span></td>

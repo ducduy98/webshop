@@ -49,6 +49,7 @@ public class shopSecuriry extends WebSecurityConfigurerAdapter {
                 .antMatchers("/nhaphang").hasAnyRole("ADMIN", "QUANLI", "NHANVIEN")
                 .antMatchers("/code").hasAnyRole("ADMIN", "QUANLI", "NHANVIEN")
                 .antMatchers("/quanlitaikhoan").hasAnyRole("ADMIN", "QUANLI")
+                .antMatchers("/quanlidanhmuc").hasAnyRole("ADMIN", "QUANLI")
                 .antMatchers("/total").hasAnyRole("ADMIN", "QUANLI")
                 .and()
                 .formLogin()

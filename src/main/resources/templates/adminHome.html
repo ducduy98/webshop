@@ -76,7 +76,7 @@
 <body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lý sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -98,8 +98,8 @@
 
             <div >
                 <ul class="pagination m-4">
-                    <li class="page-item"><a class="page-link d-inline" ng-click="pre(page)" ng-if="page>0">pre page</a></li>
-                    <li class="page-item"><a class="page-link d-inline" ng-click="next(page)">next page</a></li>
+                    <li class="page-item"><a class="page-link d-inline" ng-click="pre(page)" ng-if="page>0">Pre page</a></li>
+                    <li class="page-item"><a class="page-link d-inline" ng-click="next(page)">Next page</a></li>
                     <li><h3 class="d-inline ml-3">page : {{page}}</h3></li>
                     <li><button class="btn-outline-info d-inline float-right ml-3" ng-click="showAdd()">Add Product</button></li>
                 </ul>
@@ -148,9 +148,9 @@
             <div class="row mb-3 ml-5 mt-5" id="hideAdd">
                 <form class="form-group" enctype="multipart/form-data" id="fileUploadForm">
                     <label >Tên sản phẩm:</label>
-                    <input type="text" class="form-control mr-3 ml-3" ng-model="nameProduct" placeholder="nhap ten san pham..." id="name">
+                    <input type="text" class="form-control mr-3 ml-3" ng-model="nameProduct" placeholder="Nhập tên sản phẩm..." id="name">
                     <label >Giá : </label>
-                    <input type="number" class="form-control mr-3 ml-3" ng-model="prince" placeholder="nhap so luong..." id="prince">
+                    <input type="number" class="form-control mr-3 ml-3" ng-model="prince" placeholder="Nhập số lượng..." id="prince">
 
                     <label >Hình ảnh:</label>
                     <input type="file" multiple class="form-control mr-3 ml-3" name="files" id="myFile">

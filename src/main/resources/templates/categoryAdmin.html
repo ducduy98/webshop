@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>admin</title>
+    <title>Admin</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -77,7 +77,7 @@
 <body ng-app="MyApp" ng-controller="sexController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lý sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -112,10 +112,10 @@
 
                             <li class="list-group-item">
                                 <div class="input-group">
-                                    <span class="input-group-addon">Thêm danh mục :</span>
+                                    <span class="input-group-addon">Thêm danh mục : </span>
                                     <input type="text" id="category{{s.idsex}}" class="form-control"
                                            ng-model="namecategory"
-                                           placeholder="nhap danh muc">
+                                           placeholder="Nhập danh mục">
                                     <button type="button" class="btn btn-primary" ng-click="saveCategory(s.idsex)">Thêm danh mục
                                     </button>
                                 </div>
@@ -127,9 +127,9 @@
                 <ul class="list-group m-4">
                     <li class="list-group-item mb-5" style="padding: 20px">
                         <div class="input-group">
-                            <span class="input-group-addon">Thêm đối tượng :</span>
+                            <span class="input-group-addon">Thêm đối tượng : </span>
                             <input id="doituong" type="text" class="form-control" ng-model="namesex"
-                                   placeholder="nhap doi tuong">
+                                   placeholder="Thêm đối tượng">
                             <button type="button" class="btn btn-primary" ng-click="save()">Thêm đối tượng</button>
                         </div>
                     </li>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="form-group">
 
-                            <button type="button" class="btn-info" ng-click="updateDoiTuong(gioitinh.idsex)">Edit
+                            <button type="button" class="btn-info" ng-click="updateDoiTuong(gioitinh.idsex)">Cập nhật
                             </button>
                         </div>
                     </form>

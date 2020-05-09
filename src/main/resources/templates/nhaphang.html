@@ -75,7 +75,7 @@
 <body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lý sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -133,18 +133,20 @@
 
                 <div class="form-group">
                     <label >Số lượng:</label>
-                    <input ng-model="number" type="number" class="form-control" placeholder="so luong ...">
+                    <input ng-model="number" type="number" class="form-control" placeholder="Số lượng ...">
                 </div>
 
 
                 <div class="form-group">
                     <label >Giá nhập:</label>
-                    <input type="number" class="form-control" ng-model="gia" placeholder="gia nhap ...">
+                    <input type="number" class="form-control" ng-model="gia" placeholder="Giá nhập ...">
                 </div>
 
 
                 <button class="btn-info mt-4" ng-click="add()" >Thêm vào phiếu nhập</button>
             </form>
+            <br>
+            <a th:href="@{/nhaphang/back}"><button class="btn-warning">Hoàn thành !!</button></a>
         </div>
 
         <div class="col-sm-7 p-4">
@@ -175,7 +177,7 @@
             </table>
 
 
-            <a th:href="@{/nhaphang/back}"><button class="btn-warning">Hoàn thành !!</button></a>
+
         </div>
     </div>
 
