@@ -267,7 +267,7 @@
 <!--                                <li><span>xuất xứ :</span><a href="#">quang chau</a></li>-->
                                 <li th:each=" danhMuc : ${productEntiti.getProductCategoriesByIdproduct()}"><span>Danh mục:</span><span th:utext="${danhMuc.getCategoryByCategory().getCategory()}"></span></li>
 
-                                <li><span>Số lượng  :</span><span th:if="${productEntiti.getNumber()>1}">Còn hàng</span><span th:if="${productEntiti.getNumber()<1}">Hết hàng</span></li>
+                                <li><span>Tình trạng  :</span><span th:if="${productEntiti.getNumber()>1}">Còn hàng</span><span th:if="${productEntiti.getNumber()<1}">Hết hàng</span></li>
                             </ul>
                         </div>
                         <div class="product-availabily-option mt-15 mb-15">

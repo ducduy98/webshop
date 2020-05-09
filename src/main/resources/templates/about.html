@@ -139,7 +139,9 @@
                     <div class="mini-cart-option">
                         <ul>
                             <li class="my-cart" th:if="${filter==1}">
-                                <a class="ha-toggle" href="#"><span class="lnr lnr-cart"></span><span class="count" th:utext="${soluongcode}"></span>Mã giảm giá</a>
+                                <a class="ha-toggle" href="#"><span class="lnr lnr-cart"></span><span class="count"
+                                                                                                      th:utext="${soluongcode}"></span>Mã
+                                    giảm giá</a>
                                 <ul class="mini-cart-drop-down ha-dropdown">
                                     <li th:each="c : ${code}">
                                         <ol>
@@ -148,12 +150,14 @@
                                                 <br>
                                             </li>
                                             <li>
-                                                <div class="subtotal-text">Giảm giá: </div>
-                                                <div class="subtotal-price"><span th:utext="${c.getGiamGia()}"></span></div>
+                                                <div class="subtotal-text">Giảm giá:</div>
+                                                <div class="subtotal-price"><span th:utext="${c.getGiamGia()}"></span>
+                                                </div>
                                             </li>
                                             <li>
-                                                <div class="subtotal-text">Áp dụng từ: </div>
-                                                <div class="subtotal-price"><span th:utext="${c.getPriceMin()}"></span></div>
+                                                <div class="subtotal-text">Áp dụng từ:</div>
+                                                <div class="subtotal-price"><span th:utext="${c.getPriceMin()}"></span>
+                                                </div>
                                             </li>
                                             <br>
                                             <hr style="width: 50%;">
@@ -180,10 +184,11 @@
                         <div class="main-menu">
                             <nav id="mobile-menu">
                                 <ul>
-                                    <li><a th:href="@{/trangchu}">Trang chủ<span class="lnr lnr-chevron-down"></span></a>
+                                    <li><a th:href="@{/trangchu}">Trang chủ<span
+                                            class="lnr lnr-chevron-down"></span></a>
 
                                     </li>
-                                    <li><a href="#">Thông tin<span class="lnr lnr-chevron-down"></span></a>
+                                    <li><a th:href="@{/about}">Thông tin<span class="lnr lnr-chevron-down"></span></a>
 
                                     </li>
                                     <li class="static"><a href="#">FaceBook Page<span
@@ -226,6 +231,95 @@
         </div>
     </div>
 </div>
+<div style="margin:0px 100px 10px 100px;font-size: large">
+    <div class="col-sm-auto">
+        <h2>Giới thiệu về Classic Fashion Shop</h2>
+        <p>Ra đời vào giữa năm 2019, Classic Fashion Shop là cửa hàng thời trang với các sản phẩm da dạng, phong phú và
+            trở thành địa chỉ mua sắm online đầy tin cậy, tiện lợi cho khách hàng tại Hà Nội và các tỉnh thành khác trên
+            toàn quốc.
+
+            Classic Fashion Shop là một website thời trang online, phục vụ nhu cầu mua sắm trực tuyến bao gồm: chọn và
+            mua hàng trực tuyến nhanh chóng, thanh toán trực tuyến an toàn, giao hàng tận nơi. Với mong muốn đem đến cho
+            khách hàng những sản phẩm chất lượng, thời trang với giá cả hơp lý nhất, mang ứng dụng cao, hiện đại, năng
+            động, phù hợp với văn hóa, gu thẩm mỹ của người Việt Nam.
+        </p>
+
+        <h3>Tầm nhìn:</h3>
+        <p>
+            Classic Fashion Shop mong muốn trở thành website cung cấp những sản phẩm thời trang uy tín, chất lượng và
+            tốt nhất cho quý khách hàng. Đưa Classic Fashion Shop trở thành nơi mua sắm trực tuyến ưa thích
+            và thường xuyên của khách hàng số 1 VN về thời trang.
+        </p>
+
+        <h3>Sản phẩm chủ đạo của chúng tôi là:</h3>
+
+        <p>
+            -Các sản phẩm thời trang nam nữ, bao gồm: Giày dép, quần áo, thể thao, phụ kiện, làm đẹp, váy-đầm... với
+            mẫu mã đa dạng, đảm bảo phù hợp với thị hiếu thời trang và túi tiền của quý khách.
+        </p>
+        <br>
+        <h3>Sứ mệnh:</h3>
+        <ul style="list-style-type:disc">
+            <li>
+                -Các sản phẩm của chúng tôi đều được nhập từ các nhà cung cấp thời trang uy tín,làm từ các chất liệu
+                tốt,
+                đáp ứng đầy đủ các yêu cầu về thẩm mỹ và chất lượng sản phẩm. Ngoài ra <span style="font-weight: bold">Classic Fashion Shop</span>
+                luôn cố gắng khai thác thêm nhiều mẫu mã, đảm bảo được sự đa dạng và độc đáo của mỗi sản phẩm . Chúng
+                tôi sẽ luôn đáp ứng nhằm
+                phục vụ các Quý khách một cách tốt nhất.
+            </li>
+            <br>
+
+            <li>
+                -Đặt mục tiêu trở thành một trung tâm mua sắm trực tuyến hàng đầu tại Việt Nam về các sản phẩm dẫn đầu
+                về
+                uy tín, chất lượng và dịch vụ, Classic Fashion Shop cam kết:
+            </li>
+            <br>
+
+            <li>
+
+
+                -Cung cấp các sản phẩm - dịch vụ chất lượng tốt, giá cả phù hợp với túi tiền người tiêu dùng.
+            </li>
+            <br>
+            <li>
+                -Các sản phẩm được kiểm tra, sàng lọc kỹ càng, đảm bảo an toàn cho sức khỏe cho người sử dụng.
+            </li>
+            <br>
+            <li>
+                -Bảo hành nghiêm túc theo quy định của nhà sản xuất. Hình ảnh quảng cáo chân thực được chụp thật chứ
+                không sử dụng hình minh họa như các website khác.
+            </li>
+            <br>
+            <li>
+                -Tư vấn, hướng dẫn sử dụng với từng sản phẩm, đặc biệt với các sản phẩm chuyên dụng.
+            </li>
+            <br>
+        </ul>
+        <h4>
+            Sản phẩm trên Classic Fashion Shop là những sản phẩm của thời trang hiện đại mang tính hữu dụng để mọi người
+            có thể tự do kết hợp và sáng tạo chúng trong phong cách độc đáo riêng của từng người mà không phân biệt tuổi
+            tác và ngành nghề.
+        </h4>
+
+
+        <h4>
+            Với các tiêu chí về chất lượng và một đội ngũ năng động, nhiệt tình, giàu kinh nghiệm, Classic Fashion Shop
+            nhất định sẽ là điểm mua sắm lý tưởng cho các đối tượng khách hàng trên cả nước, nhanh gọn, an toàn và tiết
+            kiệm thời gian hiệu quả.
+        </h4><br>
+        <hr>
+        <h2>Classic Fashion Shop</h2>
+        <span>
+        Địa chỉ: 	132 Cầu Diễn, Minh Khai , Bắc Từ Liêm, Hà Nội.<br>
+            Điện thoại: 	0355636650<br>
+        Email: 	nguyenducduy131098@gmail.com<br>
+        </span>
+
+    </div>
+</div>
+
 <!-- breadcrumb area end -->
 
 <!--  end related-product -->
@@ -313,7 +407,8 @@
                             </div>
                             <div class="newsletter-box">
                                 <form id="mc-form">
-                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box"
+                                           placeholder="email">
                                     <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
                                 </form>
                             </div>
@@ -582,5 +677,4 @@
 <script th:src="@{/assets/js/main.js}"></script>
 </body>
 
-<!-- Mirrored from demo.hasthemes.com/sinrato-v1.1.1/sinrato/product-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 Sep 2019 02:08:33 GMT -->
 </html>

@@ -88,13 +88,20 @@
                     <div class="mini-cart-option">
                         <ul>
                             <li class="my-cart" th:if="${filter==1}">
-                                <a class="ha-toggle" href="#"><span class="lnr lnr-cart"></span><span class="count" th:utext="${soluongcode}"></span>Mã giảm giá</a>
+                                <a class="ha-toggle" href="#">
+                                    <span class="fa fa-gift mr-2"  style="font-size: 35px"></span>
+                                    <span class="count" th:utext="${soluongcode}"></span>Mã giảm giá
+                                </a>
                                 <ul class="mini-cart-drop-down ha-dropdown">
                                     <li th:each="c : ${code}">
                                         <ol>
                                             <li>
+                                                <div class="subtotal-text">Nhập mã: </div>
+                                                <h4 style="color: #fedc19" th:utext="${c.getCode()}"></h4>
+                                                
+                                            </li>
+                                            <li style="overflow: hidden;height: 25px;">
                                                 <h4 style="color: #fedc19" th:utext="${c.getChitiet()}"></h4>
-                                                <br>
                                             </li>
                                             <li>
                                                 <div class="subtotal-text">Giảm giá: </div>
@@ -111,7 +118,7 @@
                                 </ul>
                             </li>
                             <li class="my-cart">
-                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
+                                <a class="ha-toggle" th:href="@{/myCart}"><span class="fa fa-shopping-cart mr-2"  style="font-size: 35px"></span><span
                                         class="count" th:utext="${sizeCart}"></span>Giỏ hàng</a>
 
                             </li>

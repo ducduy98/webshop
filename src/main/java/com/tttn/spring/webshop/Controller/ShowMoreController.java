@@ -35,7 +35,6 @@ public class ShowMoreController {
             List<CartEntity> listC2=cartCrud.getListCart(id);
             int size=listC2.size();
             model.addAttribute("sizeCart",size);
-
         }
         else if(id==null){
             HttpSession session =request.getSession();

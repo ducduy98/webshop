@@ -134,7 +134,7 @@
                     <td><span ng-repeat="n in p.productCategoriesByIdproduct">{{n.categoryByCategory.category}}</span></td>
                     <th ng-if="p.forMartDateUpdate==''">Chưa update</th>
                     <th ng-if="p.forMartDateUpdate!=''">{{p.forMartDateUpdate}}</th>
-                    <td><i class='fas fa-pen-nib' style='font-size:40px;color: blue' ng-click="edit(p.idproduct)"></i></td>
+                    <td ng-click="edit(p.idproduct)"><i class='fas fa-pen-nib' style='font-size:40px;color: blue' ng-click="edit(p.idproduct)"></i></td>
                     <td><i class="fa fa-close" style="font-size:40px;color:red" ng-click="delete(p.idproduct)"></i></td>
                 </tr>
 

@@ -45,6 +45,7 @@ public class TimKiemController {
                 List<CartEntity> listCarts=new ArrayList<CartEntity>();
 
                 model.addAttribute("myCart",listCarts);
+                System.out.println(listCarts);
                // logger.info("khoi tao my cart khong dung tai khoan");
                 model.addAttribute("sizeCart",0);
             }else{
