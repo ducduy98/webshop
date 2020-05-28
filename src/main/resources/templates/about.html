@@ -62,12 +62,12 @@
                         if (data > 0) {
                             $("#myCart").html(data);
                             swal({
-                                title: "them vao gio hang thanh cong",
+                                title: "Thêm vào giỏ hàng thành công",
                                 icon: "success",
                             });
                         } else {
                             swal({
-                                title: "so luong hang khong du",
+                                title: "Số lượng hàng không đủ",
                                 icon: "error",
                             });
                         }
@@ -90,35 +90,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/login}">Đăng nhập</a></li>
-                                    <li><a th:href="@{/homeAdmin}">For Admin</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -234,7 +206,7 @@
 <div style="margin:0px 100px 10px 100px;font-size: large">
     <div class="col-sm-auto">
         <h2>Giới thiệu về Classic Fashion Shop</h2>
-        <p>Ra đời vào giữa năm 2019, Classic Fashion Shop là cửa hàng thời trang với các sản phẩm da dạng, phong phú và
+        <p style="font-size: 18px;letter-spacing: 1px;line-height: 1.5;">Ra đời vào giữa năm 2019, Classic Fashion Shop là cửa hàng thời trang với các sản phẩm da dạng, phong phú và
             trở thành địa chỉ mua sắm online đầy tin cậy, tiện lợi cho khách hàng tại Hà Nội và các tỉnh thành khác trên
             toàn quốc.
 
@@ -245,7 +217,7 @@
         </p>
 
         <h3>Tầm nhìn:</h3>
-        <p>
+        <p style="font-size: 18px;letter-spacing: 1px;line-height: 1.5;">
             Classic Fashion Shop mong muốn trở thành website cung cấp những sản phẩm thời trang uy tín, chất lượng và
             tốt nhất cho quý khách hàng. Đưa Classic Fashion Shop trở thành nơi mua sắm trực tuyến ưa thích
             và thường xuyên của khách hàng số 1 VN về thời trang.
@@ -253,7 +225,7 @@
 
         <h3>Sản phẩm chủ đạo của chúng tôi là:</h3>
 
-        <p>
+        <p style="font-size: 18px;letter-spacing: 1px;line-height: 1.5;">
             -Các sản phẩm thời trang nam nữ, bao gồm: Giày dép, quần áo, thể thao, phụ kiện, làm đẹp, váy-đầm... với
             mẫu mã đa dạng, đảm bảo phù hợp với thị hiếu thời trang và túi tiền của quý khách.
         </p>
@@ -297,14 +269,14 @@
             </li>
             <br>
         </ul>
-        <h4>
+        <h4 style="font-size: 18px;letter-spacing: 1px;line-height: 1.5;">
             Sản phẩm trên Classic Fashion Shop là những sản phẩm của thời trang hiện đại mang tính hữu dụng để mọi người
             có thể tự do kết hợp và sáng tạo chúng trong phong cách độc đáo riêng của từng người mà không phân biệt tuổi
             tác và ngành nghề.
         </h4>
 
 
-        <h4>
+        <h4 style="font-size: 18px;letter-spacing: 1px;line-height: 1.5;">
             Với các tiêu chí về chất lượng và một đội ngũ năng động, nhiệt tình, giàu kinh nghiệm, Classic Fashion Shop
             nhất định sẽ là điểm mua sắm lý tưởng cho các đối tượng khách hàng trên cả nước, nhanh gọn, an toàn và tiết
             kiệm thời gian hiệu quả.

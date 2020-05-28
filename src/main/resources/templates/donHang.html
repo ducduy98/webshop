@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>admin</title>
+    <title>Quản lý đơn hàng</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -51,8 +51,9 @@
             transition: margin-left .5s;
             padding: 16px;
         }
+
         tbody > tr > td {
-            padding : 9px;
+            padding: 9px;
             height: 30px;
         }
 
@@ -74,7 +75,7 @@
 <body ng-app="MyApp" ng-controller="productController" ng-init="getAll()">
 <div id="mySidenav" class="sidenav" ng-app>
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a th:href="@{/homeAdmin}">Thêm sản phẩm</a>
+    <a th:href="@{/homeAdmin}">Quản lí sản phẩm</a>
     <a th:href="@{/nhaphang}">Tạo phiếu nhập</a>
     <a th:href="@{/quanlidonhang}">Quản lí đơn hàng</a>
     <a th:href="@{/quanlidanhmuc}">Quản lí danh mục</a>
@@ -88,7 +89,7 @@
 <div id="main">
 
     <div class="row" style="height: 50px;">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Dashboard</span>
     </div>
     <div class="row">
 
@@ -103,19 +104,22 @@
                         <option value="4">Đơn hàng hoàn thành</option>
                     </select>
                 </div>
-               <div ng-if="1==status" style="margin-top: 20px; margin-bottom: 20px">
-                   <h2>Đơn hàng đang chờ xác nhận</h2>
-                   <p>Đơn hàng được khách order và đang trong thời gian đợi nhân viên xác nhận , click xác nhận để xác nhận đơn hàng</p>
-               </div>
+                <div ng-if="1==status" style="margin-top: 20px; margin-bottom: 20px">
+                    <h2>Đơn hàng đang chờ xác nhận</h2>
+                    <p>Đơn hàng được khách đặt mua và đang trong thời gian đợi nhân viên xác nhận , click xác nhận để xác
+                        nhận đơn hàng</p>
+                </div>
 
                 <div ng-if="2==status" style="margin-top: 20px; margin-bottom: 20px">
                     <h2>Đơn hàng đã được xác nhận và đang đợi gửi đi</h2>
-                    <p>Đây là những đơn hàng đã được nhân viên xác nhận và đóng gói đang đợi gửi, click đã gửi khi đã gửi hàng đi</p>
+                    <p>Đây là những đơn hàng đã được nhân viên xác nhận và đóng gói đang đợi gửi, click đã gửi khi đã
+                        gửi hàng đi</p>
                 </div>
 
                 <div ng-if="3==status" style="margin-top: 20px; margin-bottom: 20px">
                     <h2>Đơn hàng đã được gửi đi và đợi khách hàng thanh toán</h2>
-                    <p>Đây là những đơn hàng đã được nhân viên gửi hàng đi , click vào hoàn thành khi khách đã nhận hàng</p>
+                    <p>Đây là những đơn hàng đã được nhân viên gửi hàng đi , click vào hoàn thành khi khách đã nhận
+                        hàng</p>
                 </div>
 
                 <div ng-if="4==status" style="margin-top: 20px; margin-bottom: 20px">
@@ -148,15 +152,21 @@
                         <td>{{quanliPhieu.maPhieu}}</td>
                         <td>{{quanliPhieu.chitietEntity.khach}}</td>
                         <td>{{quanliPhieu.chitietEntity.thongTin}}</td>
-                        <td><div style="margin-bottom: 10px" ng-repeat="p in quanliPhieu.phieumuaCartsByMaPhieu"><span><img ng-src="/{{p.cartByCart.productSizeColorEntity.anh}}"
-                                                                                                                            style="width: 50px;height: 50px;margin-right: 10px" ></span>
-                           <span>{{p.cartByCart.productSizeColorEntity.sanPham}}</span></div></td>
+                        <td>
+                            <div style="margin-bottom: 10px"
+                                 ng-repeat="p in quanliPhieu.phieumuaCartsByMaPhieu"><span><img
+                                    ng-src="/{{p.cartByCart.productSizeColorEntity.anh}}"
+                                    style="width: 50px;height: 50px;margin-right: 10px"></span>
+                                <span>{{p.cartByCart.productSizeColorEntity.sanPham}}</span></div>
+                        </td>
                         <td>{{quanliPhieu.dateFormat}}</td>
                         <td>{{quanliPhieu.codeByCode.code}}</td>
                         <td>{{quanliPhieu.chitietEntity.phiShip}}</td>
                         <td>{{quanliPhieu.thanhToan}}</td>
                         <td ng-if="1 == status || 2 == status || 3 == status"><i class='fas fa-arrow-alt-circle-right'
-                               ng-click="xacthuc(quanliPhieu.maPhieu)" style='font-size:30px;color:blue'></i></td>
+                                                                                 ng-click="xacthuc(quanliPhieu.maPhieu)"
+                                                                                 style='font-size:30px;color:blue'></i>
+                        </td>
 
 
                     </tr>
@@ -164,12 +174,10 @@
                 </table>
             </div>
 
+        </div>
     </div>
-</div>
 
 </div>
-
-
 
 
 <!-- find scrip angular-->
@@ -181,31 +189,31 @@
 
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
+        document.getElementById("main").style.marginLeft = "0";
     }
 
     var app = angular.module('MyApp', []);
 
-    app.controller('productController', function($scope,$http) {
-        $scope.phieumua=null;
-        $scope.status=1;
-        $scope.getAll=function(){
-            $http.get("/apiphieumua/phieumua/"+$scope.status).then(function(result){
-                $scope.phieumua=result.data.data;
+    app.controller('productController', function ($scope, $http) {
+        $scope.phieumua = null;
+        $scope.status = 1;
+        $scope.getAll = function () {
+            $http.get("/apiphieumua/phieumua/" + $scope.status).then(function (result) {
+                $scope.phieumua = result.data.data;
             })
         }
-        $scope.xacthuc=function(key){
-            $http.get("/apiphieumua/phieumua/xacthuc/"+$scope.status+"/"+key)
-                .then(function(result){
-                swal({
-                    title:result.data.message,
-                    icon:"success",
+        $scope.xacthuc = function (key) {
+            $http.get("/apiphieumua/phieumua/xacthuc/" + $scope.status + "/" + key)
+                .then(function (result) {
+                    swal({
+                        title: result.data.message,
+                        icon: "success",
+                    })
+                    $scope.phieumua = result.data.data;
                 })
-                $scope.phieumua=result.data.data;
-            })
         }
-        $scope.thaydoi=function(){
-            $scope.status=$scope.statusChange;
+        $scope.thaydoi = function () {
+            $scope.status = $scope.statusChange;
             $scope.getAll();
             console.log($scope.status);
 

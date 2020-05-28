@@ -2,8 +2,6 @@ package com.tttn.spring.webshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
-
 public class DashboardTotal {
 
     private String date;

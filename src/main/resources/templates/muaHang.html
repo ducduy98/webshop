@@ -35,6 +35,15 @@
         select {
             display: block;
         }
+
+        .thanhtoan {
+            background-color: #d0c9ff;
+            height: 60px;
+            width: 200px;
+            border: 1px solid #1b95e0;
+            border-radius: 5px;
+            display: -webkit-inline-box;
+        }
     </style>
 
     <!-- Modernizer JS -->
@@ -55,7 +64,8 @@
 </head>
 <body ng-app="myApp" ng-controller="diaChiController">
 <!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
 <![endif]-->
 
 <!-- header area start -->
@@ -71,7 +81,6 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a th:href="@{/trangchu}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Mua hàng</li>
-
 
 
                         </ul>
@@ -100,33 +109,36 @@
                                     </div>
 
 
-
-
                                     <div id="chon dia chi nhan hang" th:if="${taikhoan==1}">
                                         <h3>Chọn địa chỉ nhận hàng</h3>
                                         <br>
                                         <div class="checkout-payment">
 
-                                                <!-- dia chi -->
-                                                <div class="form-row" th:if="${sl==1}">
+                                            <!-- dia chi -->
+                                            <div class="form-row" th:if="${sl==1}">
 
-                                                    <div class="custom-radio" th:each="chitiet : ${chitiet}">
-                                                        <input class="form-check-input" type="radio" name="check" id="check_payment" th:value="${chitiet.getIddiaChi()}" checked>
-                                                        <span class="checkmark"></span>
-                                                        <label class="form-check-label" for="check_payment">Địa chỉ :</label>
+                                                <div class="custom-radio" th:each="chitiet : ${chitiet}">
+                                                    <input class="form-check-input" type="radio" name="check"
+                                                           id="check_payment" th:value="${chitiet.getIddiaChi()}"
+                                                           checked>
+                                                    <span class="checkmark"></span>
+                                                    <label class="form-check-label" for="check_payment">Địa chỉ
+                                                        :</label>
 
-                                                        <div class="payment-info" id="check_pay">
-                                                            <p th:utext="${chitiet.getThongTin()}"></p>
-                                                        </div>
+                                                    <div class="payment-info" id="check_pay">
+                                                        <p th:utext="${chitiet.getThongTin()}"></p>
                                                     </div>
-
                                                 </div>
 
-                                                <!-- ket thuc dia chi -->
+                                            </div>
+
+                                            <!-- ket thuc dia chi -->
 
                                         </div>
                                         <br>
-                                        <button class="btn btn-secondary info" ng-click="chuyentiep()">Add Địa Chỉ</button>
+                                        <button class="btn btn-secondary info" ng-click="chuyentiep()">Xác nhận địa
+                                            Chỉ
+                                        </button>
 
 
                                     </div>
@@ -134,22 +146,25 @@
 
                                     <div id="show" style="padding: 20px">
                                         <div class="form-group">
-                                            <label for="sel1">Tỉnh:</label>
-                                            <select class="form-control" id="sel1" ng-model="idTinh" ng-options="item.name for item in tinh"
+                                            <label for="sel1">Thành phố/Tỉnh:</label>
+                                            <select class="form-control" id="sel1" ng-model="idTinh"
+                                                    ng-options="item.name for item in tinh"
                                                     ng-change="setHuyen()">
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sel1">Huyện:</label>
-                                            <select class="form-control" id="sel1" ng-model="idHuyen" ng-options="item.name for item in huyen"
+                                            <label for="sel1">Quận/Huyện:</label>
+                                            <select class="form-control" id="sel1" ng-model="idHuyen"
+                                                    ng-options="item.name for item in huyen"
                                                     ng-change="setXa()">
 
 
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="sel1">Xã:</label>
-                                            <select class="form-control" id="sel1" ng-model="idXa" ng-options="item.name for item in xa">
+                                            <label for="sel1">Phường/Xã:</label>
+                                            <select class="form-control" id="sel1" ng-model="idXa"
+                                                    ng-options="item.name for item in xa">
 
 
                                             </select>
@@ -164,20 +179,16 @@
                                             <input type="text" ng-model="hoten" class="form-control" id="usr">
                                         </div>
                                         <div class="form-group">
-                                            <label for="usr">Số điện thoại:</label>
-                                            <input type="text" ng-model="sdt" class="form-control" id="usr">
+                                            <label for="sdt">Số điện thoại:</label>
+                                            <input type="text" ng-model="sdt" th:maxlength="10" class="form-control"
+                                                   id="sdt">
                                         </div>
                                         <br>
 
-                                        <button class="btn btn-secondary info" ng-click="addDiaChi()">Thêm / Cập nhật địa Chỉ</button>
+                                        <button class="btn btn-secondary info" ng-click="addDiaChi()">Thêm / Cập nhật
+                                            địa Chỉ
+                                        </button>
                                     </div>
-
-
-
-
-
-
-
 
 
                                 </div> <!-- end of checkout-form -->
@@ -185,99 +196,135 @@
                             <div class="col-12 col-sm-12 col-md-6 col-lg-5">
                                 <form action="/muahang/hoanthanh" method="post">
 
-                                <div class="order-summary">
+                                    <div class="order-summary">
 
 
-                                    <div class="section-title left-aligned">
-                                        <h3>Hàng chọn mua</h3>
+                                        <div class="section-title left-aligned">
+                                            <h3>Hàng chọn mua</h3>
 
-                                    </div>
-                                    <input type="hidden" name="maPhieu" th:value="${maPhieu}">
-                                    <h3>Mã phiếu : <span th:utext="${maPhieu}"></span></h3>
-                                    <div class="product-container">
+                                        </div>
+                                        <input type="hidden" name="maPhieu" th:value="${maPhieu}">
+                                        <h3>Mã phiếu : <span th:utext="${maPhieu}"></span></h3>
+                                        <div class="product-container">
 
-                                        <!-- hang chon mua for each -->
-                                        <div class="product-list">
-                                            <div class="product-inner media align-items-center" th:each="ds : ${dsProduct}">
-                                                <input type="hidden" name="idCart" th:value="${ds.getIdcart()}">
-                                                <div class="product-image mr-4 mr-sm-5 mr-md-4 mr-lg-5">
-                                                    <a href="#">
-                                                        <img th:src="@{|/${ds.getProductSizeColorEntity().getProductByProduct().getImage()}|}" alt="Rival Field Messenger 6" title="Rival Field Messenger 6">
-                                                    </a>
+                                            <!-- hang chon mua for each -->
+                                            <div class="product-list">
+                                                <div class="product-inner media align-items-center"
+                                                     th:each="ds : ${dsProduct}">
+                                                    <input type="hidden" name="idCart" th:value="${ds.getIdcart()}">
+                                                    <div class="product-image mr-4 mr-sm-5 mr-md-4 mr-lg-5">
+                                                        <a href="#">
+                                                            <img th:src="@{|/${ds.getProductSizeColorEntity().getProductByProduct().getImage()}|}"
+                                                                 alt="Rival Field Messenger 6"
+                                                                 title="Rival Field Messenger 6">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getProduct()}"></h5>
+                                                        <p class="product-quantity">Số lượng : <span
+                                                                th:utext="${ds.getSoluong()}"></span></p>
+                                                        <p class="product-final-price"
+                                                           th:if="${ds.getProductSizeColorEntity().getProductByProduct().giamGia() < ds.getProductSizeColorEntity().getProductByProduct().getPrice()}">
+                                                            sale :<span
+                                                                th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getSaleBySale().getSale()}"></span><span>%</span>VNĐ
+                                                        </p>
+                                                        <p class="product-final-price">Giá tiền : <span
+                                                                th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getPrice()}"></span>
+                                                        </p>
+                                                        <p class="product-final-price">Thành tiền : <span
+                                                                th:utext="${ds.thanhTien()}"></span> VNĐ</p>
+                                                    </div>
                                                 </div>
-                                                <div class="media-body">
-                                                    <h5 th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getProduct()}"></h5>
-                                                    <p class="product-quantity">Số lượng : <span th:utext="${ds.getSoluong()}"></span></p>
-                                                    <p class="product-final-price" th:if="${ds.getProductSizeColorEntity().getProductByProduct().giamGia() < ds.getProductSizeColorEntity().getProductByProduct().getPrice()}">
-                                                        sale :<span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getSaleBySale().getSale()}"></span><span>%</span>VNĐ</p>
-                                                    <p class="product-final-price">Giá tiền : <span th:utext="${ds.getProductSizeColorEntity().getProductByProduct().getPrice()}"></span></p>
-                                                    <p class="product-final-price">Thành tiền : <span th:utext="${ds.thanhTien()}"></span> VNĐ</p>
+                                            </div>
+
+                                            <!-- ket thuc hang chon mua -->
+                                        </div> <!-- end of product-container -->
+                                        <div class="order-review">
+                                            <div class="table-responsive">
+                                                <input type="hidden" name="idDiaChi" value="{{thongtin.iddiaChi}}">
+                                                <h3 class="mr-bottom-4">{{thongtin.ten}} - {{thongtin.sdt}}</h3>
+                                                <br>
+                                                <table class="table table-bordered">
+                                                    <tbody>
+
+                                                    <tr class="cart-subtotal">
+                                                        <th>Địa chỉ</th>
+                                                        <td class="text-center">{{thongtin.chitiet}} - {{thongtin.xa}} -
+                                                            {{thongtin.huyen}} - {{thongtin.thanhpho}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="cart-subtotal">
+                                                        <th>Phí Ship</th>
+                                                        <td class="text-center">{{thongtin.phiShip}}</td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="order-review">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+
+                                                    <tr class="cart-subtotal">
+                                                        <input type="hidden" name="idCode" th:value="${maCode}">
+                                                        <th>Áp dụng mã giảm giá</th>
+                                                        <input type="hidden" name="giamGia" th:value="${sale}">
+                                                        <td class="text-center" th:if="${sale >0}"> - <span
+                                                                th:utext="${sale}"></span></td>
+                                                        <td class="text-center" th:if="${sale == 0}">-0 đ</span></td>
+                                                    </tr>
+                                                    <tr class="cart-subtotal">
+                                                        <th>Tổng tiền hàng</th>
+                                                        <input type="hidden" name="tongHang" th:value="${tongAll}">
+                                                        <td class="text-center"><span th:utext="${tongAll}"></span></td>
+                                                    </tr>
+                                                    <tr class="order-total">
+                                                        <th>Tổng tiền cần thanh toán</th>
+                                                        <td class="text-center"><strong>{{phaiTra + thongtin.phiShip |
+                                                            currency:"VND ":0}}</strong></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <br>
+                                                <div>
+                                                    <div class="thanhtoan" style="margin-bottom: 20px">
+                                                        <input type="radio" name="paymentMethod" value="0" class="">
+                                                        <span>
+                                                        <b>Thanh toán khi nhận hàng</b>
+                                                            </span>
+                                                    </div>
+                                                    <div class="thanhtoan">
+                                                        <input type="radio" name="paymentMethod" value="1"
+                                                               class="radio">
+
+                                                        <b>Thanh toán qua VNPay</b>
+
+                                                        <img src="/assets/img/logo/vnpayqr.png" width="160px">
+                                                    </div>
+
+                                                </div>
+
+                                                <br>
+                                                <div>
+
+
+                                                    <input class="btn btn-secondary info" type="submit"
+                                                           value="Đặt hàng"></input>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- ket thuc hang chon mua -->
-                                    </div> <!-- end of product-container -->
-                                    <div class="order-review">
-                                        <div class="table-responsive">
-                                            <input type="hidden" name="idDiaChi" value="{{thongtin.iddiaChi}}">
-                                            <h3 class="mr-bottom-4">{{thongtin.ten}} - {{thongtin.sdt}}</h3>
-                                            <br>
-                                            <table class="table table-bordered">
-                                                <tbody>
-
-                                                <tr class="cart-subtotal">
-                                                    <th>Địa chỉ</th>
-                                                    <td class="text-center">{{thongtin.chitiet}} - {{thongtin.xa}} - {{thongtin.huyen}} - {{thongtin.thanhpho}}</td>
-                                                </tr>
-                                                <tr class="cart-subtotal">
-                                                    <th>Phí Ship</th>
-                                                    <td class="text-center">{{thongtin.phiShip}}</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <!-- end of checkout-payment -->
                                     </div>
-                                    <div class="order-review">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                                <tbody>
-
-                                                <tr class="cart-subtotal">
-                                                    <input type="hidden" name="idCode" th:value="${maCode}">
-                                                    <th>Áp dụng mã giảm giá</th>
-                                                    <input type="hidden" name="giamGia" th:value="${sale}">
-                                                    <td class="text-center" th:if="${sale >0}"> - <span th:utext="${sale}"></span></td>
-                                                    <td class="text-center" th:if="${sale == 0}">-0 đ</span></td>
-                                                </tr>
-                                                <tr class="cart-subtotal">
-                                                    <th>Tổng tiền hàng</th>
-                                                    <input type="hidden" name="tongHang" th:value="${tongAll}">
-                                                    <td class="text-center"><span th:utext="${tongAll}"></span></td>
-                                                </tr>
-                                                <tr class="order-total">
-                                                    <th>Tổng tiền phải thanh toán</th>
-                                                    <td class="text-center"><strong>{{phaiTra + thongtin.phiShip | currency:"VND ":0}}</strong></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <br>
-                                            <div>
-
-                                                <input class="btn btn-secondary info" type="submit"  value="Đặt hàng"></input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     <!-- end of checkout-payment -->
-                                </div>
                                 </form><!-- end of order-summary -->
                             </div>
                         </div> <!-- end of row -->
                     </div> <!-- end of checkout-area -->
                 </main>
 
-        <!-- end of #primary -->
+                <!-- end of #primary -->
             </div>
         </div> <!-- end of row -->
     </div> <!-- end of container -->
@@ -304,7 +351,8 @@
                             </div>
                             <div class="newsletter-box">
                                 <form id="mc-form">
-                                    <input type="email" id="mc-email" autocomplete="off" class="email-box" placeholder="email">
+                                    <input type="email" id="mc-email" autocomplete="off" class="email-box"
+                                           placeholder="email">
                                     <button class="newsletter-btn" type="submit" id="mc-submit">subscribe !</button>
                                 </form>
                             </div>
@@ -433,63 +481,63 @@
 <script>
 
     var app = angular.module("myApp", []);
-    app.controller("diaChiController",function($scope,$http){
-        $scope.tinh=null;
-        $scope.huyen=null;
-        $scope.xa=null;
-        $scope.thongtin=null;
-        var tongHang=$("input[name=tongHang]").val();
-        var giamGia=$("input[name=giamGia]").val();
-        $scope.phaiTra=tongHang-giamGia;
+    app.controller("diaChiController", function ($scope, $http) {
+        $scope.tinh = null;
+        $scope.huyen = null;
+        $scope.xa = null;
+        $scope.thongtin = null;
+        var tongHang = $("input[name=tongHang]").val();
+        var giamGia = $("input[name=giamGia]").val();
+        $scope.phaiTra = tongHang - giamGia;
         $http.get("/api/thanhpho").then(function (data) {
-            $scope.tinh=data.data.data;
+            $scope.tinh = data.data.data;
 
         })
-        $scope.setHuyen=function(){
-            var idTinh=$scope.idTinh.provinceid;
-            $http.get("/api/thanhpho/gethuyen/"+idTinh).then(function (data) {
-                $scope.huyen=data.data.data;
+        $scope.setHuyen = function () {
+            var idTinh = $scope.idTinh.provinceid;
+            $http.get("/api/thanhpho/gethuyen/" + idTinh).then(function (data) {
+                $scope.huyen = data.data.data;
             })
         }
-        $scope.setXa=function(){
-            var idHuyen=$scope.idHuyen.districtid;
-            $http.get("/api/thanhpho/gethuyen/getxa/"+idHuyen).then(function (data) {
-                $scope.xa=data.data.data;
+        $scope.setXa = function () {
+            var idHuyen = $scope.idHuyen.districtid;
+            $http.get("/api/thanhpho/gethuyen/getxa/" + idHuyen).then(function (data) {
+                $scope.xa = data.data.data;
             })
         }
 
-        $scope.addDiaChi=function(){
-            var ten=$scope.hoten;
-            var sdt=$scope.sdt;
-            var chitiet=$scope.chitiet;
-            var thanhpho=$scope.idTinh.name;
-            var huyen=$scope.idHuyen.name;
-            var xa=$scope.idXa.name;
+        $scope.addDiaChi = function () {
+            var ten = $scope.hoten;
+            var sdt = $scope.sdt;
+            var chitiet = $scope.chitiet;
+            var thanhpho = $scope.idTinh.name;
+            var huyen = $scope.idHuyen.name;
+            var xa = $scope.idXa.name;
             $http({
-                url:"/api/themchitiet",
-                method:"POST",
-                data:{
-                    "ten":ten,
-                    "sdt":sdt,
-                    "chitiet":chitiet,
-                    "thanhpho":thanhpho,
-                    "huyen":huyen,
-                    "xa":xa,
+                url: "/api/themchitiet",
+                method: "POST",
+                data: {
+                    "ten": ten,
+                    "sdt": sdt,
+                    "chitiet": chitiet,
+                    "thanhpho": thanhpho,
+                    "huyen": huyen,
+                    "xa": xa,
 
                 }
-            }).then(function(data){
-                $scope.thongtin=data.data.data;
+            }).then(function (data) {
+                $scope.thongtin = data.data.data;
 
             })
         }
 
-        $scope.chuyentiep=function(){
-            var idDiaChi=$("input[name='check']:checked").val();
+        $scope.chuyentiep = function () {
+            var idDiaChi = $("input[name='check']:checked").val();
             $http({
-                url:"/api/themchitiet/"+idDiaChi,
-                method:"GET",
-            }).then(function(data){
-                $scope.thongtin=data.data.data;
+                url: "/api/themchitiet/" + idDiaChi,
+                method: "GET",
+            }).then(function (data) {
+                $scope.thongtin = data.data.data;
 
             })
         }

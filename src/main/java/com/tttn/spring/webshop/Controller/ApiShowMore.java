@@ -21,7 +21,10 @@ public class ApiShowMore {
 
     @GetMapping("/{id}/{status}")
     public ResponseEntity<ServiceRestfull> showmore(@PathVariable("id") int id, @PathVariable("status") int status) {
-        return new ResponseEntity<ServiceRestfull>(categoryService.showMore(id, status), HttpStatus.OK);
+        System.out.println(id + " " + status);
+        ServiceRestfull kq = categoryService.showMore(id, status);
+        System.out.println("kq"+ kq.toString());
+        return new ResponseEntity<ServiceRestfull>(kq, HttpStatus.OK);
     }
 
     @PostMapping

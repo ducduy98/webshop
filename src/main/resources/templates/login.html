@@ -91,34 +91,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -219,7 +192,7 @@
                                         <div class="form-group row align-items-center mb-4">
                                             <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">User name</label>
                                             <div class="col-12 col-sm-12 col-md-8">
-                                                <input type="text" name="username" class="form-control" id="email" placeholder="username" required>
+                                                <input type="text" name="username" class="form-control" id="email" placeholder="Username" required>
                                             </div>
                                         </div>
                                         <div class="form-group row align-items-center mb-4">
@@ -298,7 +271,7 @@
                     <div class="footer-single-widget">
                         <div class="widget-title">
                             <div class="footer-logo mb-30">
-                                <a href="index.html">
+                                <a th:href="@{/trangchu}">
                                     <img src="assets/img/logo/logo.png" alt="">
                                 </a>
                             </div>

@@ -170,34 +170,39 @@ public class MuaHangController {
     }
 
     @RequestMapping(value = "/muahang/hoanthanh",method = RequestMethod.POST)
-    public String hoanThanh(@RequestParam("maPhieu") String maPhieu, @RequestParam("idCart") List<Integer> listIdCarts,
-                            @RequestParam("idDiaChi") int idDiaChi, @RequestParam("idCode") int maCode, Model model, HttpServletRequest request){
+    public String hoanThanh(
+            @RequestParam("maPhieu") String maPhieu,
+            @RequestParam("idCart") List<Integer> listIdCarts,
+            @RequestParam("idDiaChi") int idDiaChi,
+            @RequestParam("idCode") int maCode,
+            @RequestParam(name = "paymentMethod",defaultValue = "0") Integer paymentMethod,
+            Model model, HttpServletRequest request
+    ){
 
         if(checkCart(listIdCarts).size()==listIdCarts.size()){
             ChitietEntity chitietEntity=chiTietCrud.findById(idDiaChi).orElse(null);
             Date ngay= Calendar.getInstance().getTime();
             Timestamp time=new Timestamp(ngay.getTime());
             if(null==chitietEntity){
-                model.addAttribute("result","bạn chưa có thông tin địa chỉ để giao hàng");
+                model.addAttribute("result","Bạn chưa có thông tin địa chỉ để giao hàng");
             }
             else if(!validateDiaChi(chitietEntity)){
-                model.addAttribute("result","bạn để trống 1 vài ô hoặc không đầy đủ thông tin địa chỉ nên không thể mua hàng");
+                model.addAttribute("result","Bạn để trống 1 vài ô hoặc không đầy đủ thông tin địa chỉ nên không thể mua hàng");
             }
             else {
-
                 Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 String id=null;
                 if(principal instanceof UserDetails){
                     id=((UserDetails) principal).getUsername();
                 }
+                PhieumuaEntity phieumuaEntity = new PhieumuaEntity();
                 if(id!=null){
                     String finalId = id;
-
                     for(Integer idCart:listIdCarts)
                     {
                         CartEntity cartEntity = cartCrud.findById(idCart).orElse(null);
                         PhieumuaCartEntity phieumuaCartEntity = new PhieumuaCartEntity();
-                        PhieumuaEntity phieumuaEntity = new PhieumuaEntity();
+                        //PhieumuaEntity phieumuaEntity = new PhieumuaEntity();
 
                         if(maCode!=0){
                             phieumuaEntity.setMaPhieu(maPhieu).setStatus(1).setChitietEntity(chitietEntity).setDate(time).setCodeByCode(codeCrud.findById(maCode).orElse(null))
@@ -228,13 +233,13 @@ public class MuaHangController {
 
                     }
 
-                    model.addAttribute("result","hoàn thành mua hàng");
+                    model.addAttribute("result","Hoàn thành mua hàng");
 
                 }else{
                     listIdCarts.stream().forEach(idCart -> {
                         CartEntity cartEntity = cartCrud.findById(idCart).orElse(null);
                         PhieumuaCartEntity phieumuaCartEntity = new PhieumuaCartEntity();
-                        PhieumuaEntity phieumuaEntity = new PhieumuaEntity();
+                        //PhieumuaEntity phieumuaEntity = new PhieumuaEntity();
 
                         if(maCode!=0){
                             phieumuaEntity.setMaPhieu(maPhieu).setStatus(1).setChitietEntity(chitietEntity).setCodeByCode(codeCrud.findById(maCode).orElse(null))
@@ -267,13 +272,18 @@ public class MuaHangController {
                         phieuMuaCartCrud.save(phieumuaCartEntity);
 
                     });
+                    model.addAttribute("result","Hoàn thành mua hàng");
 
-                    model.addAttribute("result","hoàn thành mua hàng");
                 }
-
+                if(paymentMethod==1){
+                    String url=String.format(
+                            "redirect:/vnpay?orderId=%s",
+                            phieumuaEntity.getMaPhieu());
+                    return url;
+                }
             }
         }else{
-            model.addAttribute("result","1 trong những sản phẩm bạn mua đã có người nhanh tay mua trước và lượng hàng đã không đủ cung cấp ");
+            model.addAttribute("result","Một trong những sản phẩm bạn mua đã có người nhanh tay mua trước và lượng hàng đã không đủ cung cấp ");
         }
         return "hoanthanh";
     }

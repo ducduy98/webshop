@@ -175,7 +175,7 @@ public class CartEntity {
 
     public String forMartDate(){
 
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("dd-mm-yyyy");
         return simpleDateFormat.format(dateCart);
 
     }
@@ -192,6 +192,7 @@ public class CartEntity {
 
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         //numberFormat.setCurrency(currency);
+        System.out.println("tien"+ numberFormat.format(thanhTien()));
         return numberFormat.format(thanhTien());
     }
 }

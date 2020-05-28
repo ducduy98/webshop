@@ -39,7 +39,7 @@ public class PhieuMuaService {
         phieumuaEntity.setStatus(status+1);
         phieuMuaCrud.save(phieumuaEntity);
         serviceRestfull=findStatus(status);
-        serviceRestfull.setMessage("đã xác nhận đơn hàng");
+        serviceRestfull.setMessage("Đã xác nhận đơn hàng");
         return serviceRestfull;
 
     }

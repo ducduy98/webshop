@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -70,6 +70,8 @@ public class TrangChuController {
             List<RoleEntity> listRole=taikhoanEntity.getTaikhoanRolesById().stream().map(c->c.getRoleByRole()).filter(c->c.getIdrole()==1 || c.getIdrole()==3 || c.getIdrole()==4).collect(Collectors.toList());
             if(listRole.size()>0){
                 model.addAttribute("admin",1);
+            }else {
+                model.addAttribute("khach",1);
             }
             List<CartEntity> listC2=cartCrud.getListCart(id);
             int size=listC2.size();

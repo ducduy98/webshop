@@ -26,6 +26,7 @@ public class ShowMoreController {
 
     @GetMapping("/{id}/*")
     public String defaul(@PathVariable("id") int idc, HttpServletRequest request, Model model){
+
         Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String id=null;
         if(principal instanceof UserDetails){

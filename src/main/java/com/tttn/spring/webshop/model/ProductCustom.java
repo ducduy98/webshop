@@ -73,4 +73,5 @@ public class ProductCustom {
         this.idProduct = idProduct;
         return this;
     }
+
 }

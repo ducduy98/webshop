@@ -1,0 +1,35 @@
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="header-top black-bg"  th:fragment="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-12">
+                <div class="header-top-left">
+                    <ul>
+                        <li><span>Classic Fashion Shop </span></li>
+                        <li>Chất lượng làm nên thương hiệu</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="box box-right">
+                    <ul>
+                        <li class="settings">
+                            <a class="ha-toggle" href="#" th:if="${account != null}" th:text="${account.id}">
+                                <span class="lnr lnr-chevron-down"></span></a>
+                            <a class="ha-toggle" href="#" th:if="${account == null}"> Tài khoản
+                                <span class="lnr lnr-chevron-down"></span></a>
+                            <ul class="box-dropdown ha-dropdown">
+                                <li th:if="${user!=1}"><a th:href="@{/dangki}">Đăng kí</a></li>
+                                <li th:if="${user!=1}"><a th:href="@{/loginShop}">Đăng nhập</a></li>
+                                <li th:if="${admin==1}"><a th:href="@{/homeAdmin}">For Admin</a></li>
+                                <li th:if="${user==1}"><a th:href="@{/changepass}">Đổi mật khẩu</a></li>
+                                <li th:if="${user==1}"><a th:href="@{/logout}">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

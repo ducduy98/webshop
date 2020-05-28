@@ -90,34 +90,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -196,11 +169,16 @@
 <!--  end related-product -->
 
 <!-- body-->
-<div class="col-xl">
-<h2 th:utext="${result}"></h2>
-<h4>Cảm ơn vì đã tin tưởng Classic Fashion Shop!!!<br> Đơn hàng của bạn đang được xử lí và chuyển tới đơn vị vận chuyển</h4>
-<button class="btn-light"><a th:href="@{/trangchu}">Tiếp tục mua hàng</a></button>
+<div class="row justify-content-center">
+    <div class="col-xl-auto">
+        <h2 th:utext="${result}"></h2>
+        <h4>Cảm ơn vì đã tin tưởng Classic Fashion Shop!!!
+            <br> Đơn hàng của bạn đang được xử lí và chuyển tới đơn vị vận chuyển
+        </h4>
+        <a th:href="@{/trangchu}" class="btn btn-success btn-sm mx-auto d-block mb-5"> Tiếp tục mua hàng</a>
+    </div>
 </div>
+
 <!-- end body-->
 
 <!-- scroll to top -->

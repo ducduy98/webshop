@@ -2,7 +2,6 @@ package com.tttn.spring.webshop.convert;
 
 import com.tttn.spring.webshop.dto.DashboardTotal;
 import com.tttn.spring.webshop.model.PhieumuaEntity;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

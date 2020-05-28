@@ -29,10 +29,10 @@ public class DangkiController {
 
         int ketqua=dangkiService.dangki(username, pass1, pass2);
         if(1==ketqua){
-            String message="tai khoan da ton tai";
+            String message="Tài khoản đã tồn tại";
             return "redirect:/dangki?message="+message;
         }else if(2==ketqua){
-            String message="nhap lai pass khong dung";
+            String message="Password nhập lại chưa đúng";
             return "redirect:/dangki?message="+message;
 
         }else

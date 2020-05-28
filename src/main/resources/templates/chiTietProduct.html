@@ -92,34 +92,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -131,7 +104,7 @@
                 <div class="col-lg-5 col-md-12 col-12 order-sm-last">
                     <div class="header-middle-inner">
                         <form th:action="@{/timkiem}" method="get">
-                            <input type="text" name="tukhoa" class="top-cat-field" placeholder="Search ten san pham...">
+                            <input type="text" name="tukhoa" class="top-cat-field" placeholder="Tìm kiếm...">
                             <input type="submit" class="top-search-btn" value="Search">
                         </form>
                     </div>
@@ -141,11 +114,11 @@
                         <ul>
 
                             <li class="my-cart">
-                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
-                                        class="count" id="myCart" th:utext="${sizeCart}
-
-"></span>my cart</a>
-
+                                <a class="ha-toggle" th:href="@{/myCart}">
+                                    <span class="lnr lnr-cart"></span>
+                                    <span class="count" id="myCart" th:utext="${sizeCart}"></span>
+                                    Giỏ hàng
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -199,7 +172,7 @@
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a th:href="@{/trangchu}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Product details</li>
+                            <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
                             <li class="breadcrumb-item active" aria-current="page" th:utext="${productEntiti.getProduct()}"></li>
                         </ul>
                     </nav>
@@ -317,7 +290,7 @@
                         <div class="pro-quantity-box mb-30">
                             <div class="qty-boxx">
                                 <label>Số lượng :</label>
-                                <input type="text" value="1" id="soLuong">
+                                <input type="number" th:min="1" value="1" class="soluong" id="soLuong">
                                 <button class="btn-cart lg-btn" th:onclick="|addToCart1(${productEntiti.getIdproduct()})|">add to cart</button>
                             </div>
                         </div>
@@ -393,7 +366,7 @@
 
                                 </div> <!-- end of customer-review -->
                                 <form action="#" class="review-form">
-                                    <h2>Write a review</h2>
+                                    <h2>Bình luận</h2>
                                     <div class="form-group row" th:if="${giatri<2}">
                                         <div class="col">
 
@@ -407,7 +380,7 @@
                                     </div>
                                     <div class="form-group row" th:if="${giatri==2}">
                                         <div class="col">
-                                            <label class="col-form-label"><span class="text-danger"></span>ban chua mua san pham nay</label>
+                                            <label class="col-form-label"><span class="text-danger"></span>Mua sản phẩm để có thể bình luận</label>
 
                                         </div>
                                     </div>
@@ -431,8 +404,8 @@
             <h3><span>Sản phẩm</span> cùng danh mục </h3>
         </div>
         <div class="flash-sale-active4 owl-carousel owl-arrow-style" th:each="danhmuc : ${productEntiti.getProductCategoriesByIdproduct()}">
-            <div class="product-item mb-30" th:each="productCon : ${danhmuc.getCategoryByCategory().getProductCategoriesByIdcategory()}">
-                <div class="product-thumb">
+            <div class="product-item mb-30" th:each="productCon : ${danhmuc.getCategoryByCategory().getProductCategoriesByIdcategory()}" th:if="${productCon.getProductByProduct().getStatus()==1}">
+                <div class="product-thumb" >
                     <a th:href="@{|/product_details/${productCon.getProductByProduct().getIdproduct()}/${productCon.getProductByProduct().getProduct().replaceAll(' ','_')}|}">
                         <img style="height: 250px" th:src="@{|/${productCon.getProductByProduct().getImage()}|}" class="pri-img" alt="">
 
@@ -750,6 +723,13 @@
 
 <!-- danh dau file script-->
 <script>
+    $('.soluong').change(function (event) {
+
+        if($(this).val() < 1){
+            $($(this).val(1))
+        } debugger
+
+    })
     var app = angular.module('MyApp', []);
 
     app.controller('productController', function($scope,$http) {

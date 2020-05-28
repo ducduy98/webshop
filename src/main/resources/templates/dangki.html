@@ -90,34 +90,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">

@@ -55,34 +55,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
 
     <!-- danh dau show more-->
 
@@ -109,8 +82,11 @@
                         <ul>
 
                             <li class="my-cart">
-                                <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
-                                        class="count" th:utext="${sizeCart}"></span>my cart</a>
+                                <a class="ha-toggle" th:href="@{/myCart}">
+                                    <span class="lnr lnr-cart"></span>
+                                    <span class="count" th:utext="${sizeCart}"></span>
+                                    Giỏ hàng
+                                </a>
 
                             </li>
                         </ul>
@@ -203,7 +179,7 @@
                                             <img ng-src="/{{show.image}}" width="100" alt="">
                                         </a>
                                     </div>
-                                    <div class="blogg-content">
+                                    <div class="blogg-content" style="height: 160px">
                                         <span class="post-date" style="color: red">{{show.giamGia}}</span>
                                         <span class="post-date" style="color: black" ng-if="show.giamgGia < show.price"><del>{{show.price}}</del></span>
 
@@ -530,7 +506,9 @@
             }
             $scope.filter=function(event){
                 $http.get("/apishowmore/"+id+"/"+event).then(function(result){
+                    console.log(result);
                     $scope.product=result.data.data;
+                    console.log($scope.product);
                 })
             }
         }

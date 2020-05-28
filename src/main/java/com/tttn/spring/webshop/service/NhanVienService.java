@@ -92,9 +92,9 @@ public class NhanVienService {
                     tk.getId(), tk.getPass()
             ));
 
-            serviceRestfull.setMessage("success");
+            serviceRestfull.setMessage("Success");
         } catch (Exception ex) {
-            serviceRestfull.setMessage("error");
+            serviceRestfull.setMessage("Kiểm tra lại tài khoản và mật khẩu");
         }
         return serviceRestfull;
 

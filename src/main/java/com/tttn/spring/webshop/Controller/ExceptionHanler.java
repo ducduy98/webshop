@@ -15,7 +15,8 @@ public class ExceptionHanler  {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ServiceRestfull exceptionHanler(Exception ex){
         ServiceRestfull serviceRestfull=new ServiceRestfull();
-        System.out.println("chay vao day");
+        System.out.println("exception handle");
+        ex.printStackTrace();
         serviceRestfull.setMessage(ex.getMessage());
         return serviceRestfull;
 

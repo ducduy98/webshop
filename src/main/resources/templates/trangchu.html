@@ -37,37 +37,7 @@
 
 <!-- header area start -->
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li th:if="${user!=1}"><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li th:if="${user!=1}"><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                    <li th:if="${admin==1}"><a th:href="@{/homeAdmin}">For Admin</a></li>
-                                    <li th:if="${user==1}"><a th:href="@{/changepass}">Đổi mật khẩu</a></li>
-                                    <li th:if="${user==1}"><a th:href="@{/logout}">Đăng xuất</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -98,7 +68,7 @@
                                             <li>
                                                 <div class="subtotal-text">Nhập mã: </div>
                                                 <h4 style="color: #fedc19" th:utext="${c.getCode()}"></h4>
-                                                
+
                                             </li>
                                             <li style="overflow: hidden;height: 25px;">
                                                 <h4 style="color: #fedc19" th:utext="${c.getChitiet()}"></h4>
@@ -245,7 +215,7 @@
                     </div>
                     <div class="banner-right-thumb mb-30">
                         <a href="#">
-                            <img src="assets/img/banner/banner2.jpg" alt="" height="930">
+                            <img src="assets/img/banner/banner2.jpg" alt="" style="height: 325px" >
                         </a>
                     </div>
                 </div>
@@ -277,7 +247,7 @@
                                     <div class="latest-thumb">
                                         <a th:href="@{|/product_details/${buyMany1.getIdproduct()}/${buyMany1.getProduct().replaceAll(' ','_')}|}"><img th:src="@{|${buyMany1.getImage()}|}" alt=""></a>
                                     </div>
-                                    <div class="latest-pro-content">
+                                    <div class="latest-pro-content" style="width: 140px">
                                         <h4><a th:href="@{|/product_details/${buyMany1.getIdproduct()}/${buyMany1.getProduct().replaceAll(' ','_')}|}"><span
                                                 th:utext="${buyMany1.getProduct()}"></span></a></h4>
                                         <div class="price-box">
@@ -322,13 +292,13 @@
                                 </div>
                                 <div class="blogg-content">
                                     <span class="post-date">20 Jan 2020</span>
-                                    <h5><a href="blog-details.html">Ngày hội thời trang mùa xuân 2020</a></h5>
+                                    <h5><a href="#">Ngày hội thời trang mùa xuân 2020</a></h5>
                                     <p>Với sự góp mặt của hàng chục nhà thiết kế nổi tiếng và hàng ngàn sản phẩm mới...</p>
                                 </div>
                             </div>
                             <div class="single-blogg-item">
                                 <div class="blogg-thumb">
-                                    <a href="blog-details.html">
+                                    <a href="#">
                                         <img src="assets/img/blog/blog2.jpg" alt="">
                                     </a>
                                 </div>
@@ -455,8 +425,8 @@
                                                                  class="pri-img" style="height: 270px" alt="">
 
                                                         </a>
-                                                        <div class="box-label">
-                                                            <div class="label-product label_new">
+                                                        <div class="box-label" th:with="temp=${#dates.createNow().getTime() - productCategory.getProductByProduct().getDateCreated().getTime()}" >
+                                                            <div class="label-product label_new" th:if="${temp < T(java.lang.Long).parseLong('1296000000')}" >
                                                                 <span>new</span>
                                                             </div>
                                                         </div>
@@ -828,7 +798,11 @@
     </div>
 </div>
 <!-- Quick view modal end -->
-
+<script>
+    function checkNew(createdDate) {
+debugger
+    }
+</script>
 <!-- all js include here -->
 <script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/assets/js/popper.min.js}"></script>

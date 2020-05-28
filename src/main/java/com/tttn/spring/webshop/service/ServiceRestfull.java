@@ -24,4 +24,12 @@ public class ServiceRestfull {
         this.message = message;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "ServiceRestfull{" +
+                "data=" + data +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

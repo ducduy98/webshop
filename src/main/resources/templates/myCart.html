@@ -31,8 +31,21 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style type="text/css">
+        .dam{
+            font-weight: bolder;
+            font-size: xx-large;
+            color: #0b0b0b;
+        }
+        .mau1{
+            font-weight: bolder;
+            font-size: large;
+            color: #0b0b0b;
+        }
+        tr {
+            background-color: lightgrey;
+        }
         .selected {
-            background-color: cornflowerblue;
+            background-color: #83b71c;
         }
 
         input[type=checkbox] {
@@ -40,20 +53,20 @@
             cursor: pointer;
         }
 
-        input[type=checkbox]:before {
+        /*input[type=checkbox]:before {
             content: "";
             display: block;
             position: absolute;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             top: 0;
             left: 0;
             border: 2px solid #555555;
             border-radius: 3px;
             background-color: white;
-        }
+        }*/
 
-        input[type=checkbox]:checked:after {
+        /*input[type=checkbox]:checked:after {
             content: "";
             display: block;
             width: 5px;
@@ -66,7 +79,7 @@
             position: absolute;
             top: 2px;
             left: 6px;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -78,34 +91,7 @@
 <!-- header area start -->
 
 <header class="header-pos">
-    <div class="header-top black-bg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="header-top-left">
-                        <ul>
-                            <li><span>Classic Fashion Shop </span></li>
-                            <li>Chất lượng làm nên thương hiệu</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-12">
-                    <div class="box box-right">
-                        <ul>
-                            <li class="settings">
-                                <a class="ha-toggle" href="#">Tài khoản<span class="lnr lnr-chevron-down"></span></a>
-                                <ul class="box-dropdown ha-dropdown">
-                                    <li><a th:href="@{/dangki}">Đăng kí</a></li>
-                                    <li><a th:href="@{/loginShop}">Đăng nhập</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div th:replace="header"> </div>
     <div class="header-middle home-header2 theme-bg">
         <div class="container-fluid">
             <div class="row align-items-center">
@@ -128,7 +114,7 @@
 
                             <li class="my-cart">
                                 <a class="ha-toggle" th:href="@{/myCart}"><span class="lnr lnr-cart"></span><span
-                                        class="count" th:utext="${sizeCart}"></span>my cart</a>
+                                        class="count" th:utext="${sizeCart}"></span>Giỏ hàng</a>
 
                             </li>
                         </ul>
@@ -205,21 +191,21 @@
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <form id="parentForm" th:action="@{/muaHang}" method="get">
                                     <div class="section-title">
-                                        <h3>My Cart</h3>
+                                        <h3>Giỏ hàng</h3>
                                     </div>
 
                                     <div class="table-responsive">
 
                                         <table class="table table-bordered" id="tableSelect">
                                             <thead>
-                                            <tr>
+                                            <tr style="background-color: #d39e00">
                                                 <td></td>
                                                 <td>Mã sản phẩm</td>
                                                 <td>Ảnh</td>
 
                                                 <td>Tên sản phẩm</td>
 
-                                                <td>Só lượng</td>
+                                                <td>Số lượng</td>
                                                 <td>Giá tiền</td>
                                                 <td>Thành tiền</td>
                                                 <td>Xóa</td>
@@ -230,41 +216,44 @@
                                                 <tr class="selected" th:each="gioHang : ${listCarts}">
                                                     <input type="hidden" name="idGioHang"
                                                            th:value="${gioHang.getIdcart()}">
-                                                    <td class="clickTD"><input type="checkbox" checked class="click"
+                                                    <td class="clickTD">
+                                                        <input type="checkbox" checked class="click checkboxEl"
                                                                                name="check1"
                                                                                th:value="${gioHang.getIdcart()}"></td>
-                                                    <td id="ma"
+                                                    <td id="ma" class="mau1"
                                                         th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().getIdproduct()}"></td>
                                                     <td>
-                                                        <a href="product-details.html"><img
+                                                        <a th:href="@{|/product_details/${gioHang.getProductSizeColorEntity().getProductByProduct().getIdproduct()}/${gioHang.getProductSizeColorEntity().getProductByProduct().getProduct().replaceAll(' ','_')}|}">
+                                                            <img
                                                                 th:src="@{|/${gioHang.getProductSizeColorEntity().getProductByProduct().getImage()}|}"
-                                                                alt="Cart Product Image" title="Compete Track Tote"
-                                                                class="img-thumbnail"></a>
+                                                                alt="Cart Product Image" title="Xem chi tiết"
+                                                                class="img-thumbnail">
+                                                        </a>
                                                     </td>
                                                     <td>
-                                                        <a href="product-details.html"
+                                                        <a th:href="@{|/product_details/${gioHang.getProductSizeColorEntity().getProductByProduct().getIdproduct()}/${gioHang.getProductSizeColorEntity().getProductByProduct().getProduct().replaceAll(' ','_')}|}"
                                                            th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().getProduct()}"></a>
-                                                        <span>Date : <span
+                                                        <span class="mau1">Ngày mua : <span
                                                                 th:utext="${gioHang.forMartDate()}"></span></span>
-                                                        <span>Color: <span
+                                                        <span class="mau1">Màu sắc: <span
                                                                 th:utext="${gioHang.getProductSizeColorEntity().getColorByColor().getColor()}"></span></span>
-                                                        <span>Size: <span
+                                                        <span class="mau1">Size: <span
                                                                 th:utext="${gioHang.getProductSizeColorEntity().getSizeBySize().getSize()}"></span></span>
                                                     </td>
 
                                                     <td>
                                                         <div class="input-group btn-block">
                                                             <div class="product-qty">
-                                                                <input type="text" th:name="'cartItem_'+${gioHang.idcart}"
-                                                                       th:value="${gioHang.getSoluong()}" readonly>
+                                                                <input type="number" th:name="'cartItem_'+${gioHang.idcart}" th:min="1" class="soluong"
+                                                                       th:value="${gioHang.getSoluong()}" >
 <!--                                                                <input type="hidden" name="cartUpdate"-->
 <!--                                                                       th:value="${gioHang.getIdcart()+'_'+gioHang.getSoluong()}" readonly>-->
                                                             </div>
 
                                                         </div>
                                                     </td>
-                                                    <td th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().formatCurrent()}"></td>
-                                                    <td class="total" th:utext="${gioHang.forMatTienTe()}"></td>
+                                                    <td class="mau1 dongia" th:utext="${gioHang.getProductSizeColorEntity().getProductByProduct().formatCurrent()}"></td>
+                                                    <td class="total mau1" th:utext="${gioHang.forMatTienTe()}"></td>
                                                     <td>
                                                         <a th:href="@{/addToCart/delete/{id}(id=${gioHang.idcart})}">
                                                             <i class="fa fa-close" style="font-size:40px;color:red"></i>
@@ -275,14 +264,14 @@
 
                                             </tbody>
                                         </table>
-                                        <button type="button" id="btnUpdateCart" class="btn btn-success">Update</button>
+                                        <button type="button" id="btnUpdateCart" style="float: right" class="btn btn-success">Update</button>
 
 
                                     </div>
 
 
                                     <div class="cart-accordion-wrapper mt-full mt-40">
-                                        <h3>Bạn có muốn tiếp tục ?</h3>
+                                        <h3>Bạn có mã giảm giá ?</h3>
 
                                         <div id="cart_accordion" class="mt-4" role="tablist">
                                             <div class="card">
@@ -302,7 +291,7 @@
                                                             <div class="col-12 col-sm-12 col-md-9">
                                                                 <div class="input-group">
                                                                     <input type="text" name="sale" value=""
-                                                                           placeholder="mã giảm giá của bạn..."
+                                                                           placeholder="Mã giảm giá của bạn..."
                                                                            id="sale" class="form-control">
                                                                     <input type="button" value="Apply Coupon"
                                                                            id="clickSale"
@@ -339,7 +328,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="cart-button-wrapper d-flex justify-content-between mt-4">
+                                            <div class="cart-button-wrapper d-flex justify-content-between mt-4" style="float: right">
 
                                                 <button type="submit" form="parentForm"
                                                         class="btn btn-secondary warning align-self-end float-right"
@@ -507,67 +496,95 @@
 <script th:inline="javascript">
 
     $(document).ready(function () {
-
         tinhTien();
 
         $("#clickSale").click(function () {
             var sale = document.getElementById("sale").value;
             console.log("tinh tien " + tinhTien());
+
             $.ajax({
                 url: "/addToCart/useSale/" + sale + "/" + tinhTien(),
                 type: "get",
 
                 success: function (data) {
+
                     if (data == 0) {
-                        $("#hanDung").html("mã giảm giá không phù hợp với đơn hàng này !!!");
+                        $("#hanDung").html("Mã giảm giá không phù hợp với đơn hàng này !!!");
                     } else if (data == -1) {
-                        $("#hanDung").html("mã giảm giá đã hết hạn hoặc bạn nhập mã giảm giá không đúng")
+                        $("#hanDung").html("Mã giảm giá đã hết hạn hoặc bạn nhập mã giảm giá không đúng")
                     } else {
-                        $("#hanDung").html("áp dụng thành công ");
-                        $("#thucTien").html(data);
+                        $("#hanDung").html("Áp dụng thành công ");
+                        $("#thucTien").html("<span style='display: inline'>" + data +"</span>" + "<span style='display: inline'> đ</span>");
                     }
                 }
 
             })
         })
 
-        $("#tableSelect").on('click', 'tbody > tr > td .click', function (event) {
-
-            if ($(this).parent().parent().hasClass("selected")) {
-                $(this).parent().parent().removeClass('selected')
-            } else {
-                $(this).parent().parent().addClass('selected');
-            }
-            tinhTien();
 
 
-        })
 
 
     })
 
+    $('.checkboxEl').click(function (event) {
+
+        if ($(this).parent().parent().hasClass("selected")) {
+
+            $(this).parent().parent().removeClass('selected')
+        } else {
+
+            $(this).parent().parent().addClass('selected');
+        }
+
+        tinhTien();
+
+    })
+
+    $('.soluong').change(function (event) {
+
+        if($(this).val() < 1){
+            $($(this).val(1))
+        } debugger
+
+    })
+
     function tinhTien() {
-        var tongTien = 0;
-        $("#tableSelect > tbody >tr").each(function (event) {
-            if ($(this).hasClass("selected")) {
-                var giatri = $(this).find(".total").text().split(" ")[0].split(".");
-                console.log(giatri);
-                var tong = "";
-                giatri.forEach(e => tong += e);
+        var giatri = document.querySelectorAll('.dongia');
+        var tongtiens = document.querySelectorAll('.total');
+        var soluongs = (document.getElementsByClassName('soluong'));
+        var tong = 0;
 
+        giatri.forEach((value, index) => {
+            var val = value.textContent.split(" ")[0];
+            console.log('sau khi join', val.split(".").join(""))
+            var val2 = (Number)(val.split(".").join(""));
 
-                tongTien += Number(tong);
+            console.log('select???',value.parentElement.classList.contains("selected"));
+            if (value.parentElement.classList.contains("selected")) {
+                console.log('val2', val2)
+                console.log('soluong', (Number)(soluongs[index].value))
+                tong += val2 * (Number)(soluongs[index].value);
+                console.log('tong each', tong);
 
+                tongtiens[index].innerHTML = Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+                    .format(val2 * (Number)(soluongs[index].value));
             }
-        })
-        console.log(tongTien);
-        $("#giaTien").html(tongTien);
-        $("#thucTien").html(tongTien);
-        return tongTien;
+        });
+
+
+
+        console.log('tong', tong);
+        $("#giaTien").html(Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+            .format(tong));
+        $("#thucTien").html(Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'})
+            .format(tong));
+        return tong;
     }
 
 
     $("#btnTinhTien").click(function () {
+
         $("#tableSelect > tbody >tr").each(function (event) {
             if ($(this).hasClass("selected")) {
                 var giatriArray = $(this).find("#total").text().split(" ", 1).split(".");
@@ -591,7 +608,10 @@
                 contentType: false,
                 data: formData
             }).then(res => {
-                alert(res);
+                if(res === 'Update success') {
+                    tinhTien();
+                }
+                /*alert(res);*/
             })
         }
     )

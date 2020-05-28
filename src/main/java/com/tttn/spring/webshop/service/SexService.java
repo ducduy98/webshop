@@ -52,7 +52,7 @@ public class SexService {
         sex.setIdsex(timId());
         sexCrud.save(sex);
         serviceRestfull=getList();
-        serviceRestfull.setMessage("them doi tuong thanh cong");
+        serviceRestfull.setMessage("Thêm thành công");
         return serviceRestfull;
 
     }
@@ -64,10 +64,10 @@ public class SexService {
             sex.setSex(sexCate.getSex());
             sexCrud.save(sex);
             serviceRestfull=getList();
-            serviceRestfull.setMessage("update thanh cong doi tuong");
+            serviceRestfull.setMessage("Cập nhật thành công");
         }
         else{
-            serviceRestfull.setMessage("khong the update");
+            serviceRestfull.setMessage("Không thể cập nhật");
         }
 
         return serviceRestfull;
@@ -92,7 +92,7 @@ public class SexService {
         categoryService.update(sexCate);
 
         serviceRestfull=getList();
-        serviceRestfull.setMessage("update danh muc thanh cong");
+        serviceRestfull.setMessage("Cập  nhật danh mục thành công");
         return serviceRestfull;
 
     }

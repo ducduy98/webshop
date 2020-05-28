@@ -125,7 +125,7 @@ public class PhieuNhapService {
        }
         ServiceRestfull serviceRestfull=new ServiceRestfull();
         serviceRestfull.setData(nhapProductCrud.findNhap(maphieu));
-        serviceRestfull.setMessage("xoa thanh cong");
+        serviceRestfull.setMessage("Xóa thành công");
         return serviceRestfull;
     }
 }

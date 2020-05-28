@@ -16,7 +16,7 @@ public class LoginController {
     public String login(Model model, @RequestParam(value = "error",required = false,defaultValue = "") String error){
 
         if(!"".equals(error)){
-           model.addAttribute("message","dang nhap that bai");
+           model.addAttribute("message","Đăng nhập không thành công! Kiểm tra lại tài khoản hoặc mật khẩu");
         }
         return "login";
     }

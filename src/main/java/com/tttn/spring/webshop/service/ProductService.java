@@ -53,7 +53,7 @@ public class ProductService {
         ServiceRestfull serviceRestfull=new ServiceRestfull();
         if(null==productc.getImage()){
             serviceRestfull=getList();
-            serviceRestfull.setMessage("phai them it nhat 1 hinh anh");
+            serviceRestfull.setMessage("Cần thêm hình ảnh");
 
         }
         else{
@@ -70,7 +70,7 @@ public class ProductService {
 
         }
         serviceRestfull=getList();
-        serviceRestfull.setMessage("them san pham thanh cong");
+        serviceRestfull.setMessage("Thêm sản phẩm thành công");
         return serviceRestfull;
     }
 
@@ -79,7 +79,7 @@ public class ProductService {
         ServiceRestfull serviceRestfull=new ServiceRestfull();
         if(null==productc.getImage()){
             serviceRestfull=getList();
-            serviceRestfull.setMessage("phai them it nhat 1 hinh anh");
+            serviceRestfull.setMessage("Cần thêm ít nhất 1 hình ảnh");
 
         }
         else{
@@ -94,7 +94,7 @@ public class ProductService {
 
 
             serviceRestfull=getList();
-            serviceRestfull.setMessage("update san pham thanh cong");
+            serviceRestfull.setMessage("Cập nhật sản phẩm thành công");
         }
         return serviceRestfull;
     }
@@ -140,6 +140,7 @@ public class ProductService {
            product.setDateCreated(time);
            product.setStatus(1);
            product.setProduct(productc.getProduct());
+           product.setSold(0);
            //    System.out.println("gia tien la :"+productc.getPrince());
            product.setPrice(productc.getPrince());
            product.setDescribed(productc.getDesc());

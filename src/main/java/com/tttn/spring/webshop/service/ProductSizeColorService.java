@@ -6,11 +6,16 @@ import com.tttn.spring.webshop.model.ProductSizeColorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+
 @Service
 public class ProductSizeColorService {
 
     @Autowired
     ProductSizeColorCrud productSizeColorCrud;
+
+    @Autowired
+    private EntityManager emf;
 
     public ServiceRestfull getList(){
         ServiceRestfull cus=new ServiceRestfull();
@@ -34,6 +39,7 @@ public class ProductSizeColorService {
         System.out.println(" ten san pham la :"+productSizeColorCrud.getChiTiet(id, size, color).getProductByProduct().getProduct());
         cus.setData(productSizeColorCrud.getChiTiet(id, size, color));
         return cus;
-
     }
+
+
 }

@@ -90,7 +90,7 @@ public class CategoryService {
             listP.sort(new Comparator<ProductEntity>() {
                 @Override
                 public int compare(ProductEntity o1, ProductEntity o2) {
-                    return o2.getSold()-o1.getSold();
+                    return o2.getSold().intValue()-o1.getSold().intValue();
                 }
             });
             serviceRestfull.setData(listP);
